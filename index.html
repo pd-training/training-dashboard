@@ -160,7 +160,7 @@ tr:hover td{background:var(--pc-blue-lighter)}
 <div class="url-bar">
   <i class="ti ti-table" style="color:var(--pc-blue);font-size:14px;flex-shrink:0" aria-hidden="true"></i>
   <label>Google Sheet CSV URL</label>
-  <input type="text" id="csv-url" value="https://docs.google.com/spreadsheets/d/e/2PACX-1vSdKbh1axceQl2X3_Ee8qYfm3YWkFNmmLuA37Rusg7t0Qs12U-54KwjiBdUv--xJ4k8dlFMKWsZxcTa/pub?gid=0&single=true&output=csv" placeholder="Paste published Google Sheet CSV URL…">
+  <input type="text" id="sheet-url" value="https://docs.google.com/spreadsheets/d/e/2PACX-1vSdKbh1axceQl2X3_Ee8qYfm3YWkFNmmLuA37Rusg7t0Qs12U-54KwjiBdUv--xJ4k8dlFMKWsZxcTa/pub?gid=0&single=true&output=csv" placeholder="Paste published Google Sheet CSV URL…">
   <button class="btn btn-primary" onclick="loadSheet()">Load</button>
 </div>
 
@@ -169,6 +169,21 @@ tr:hover td{background:var(--pc-blue-lighter)}
   <div class="dot dot-load" id="status-dot"></div>
   <span id="status-text">Connecting to Google Sheet…</span>
   <span style="margin-left:auto;font-size:10px;color:var(--pc-gray)" id="last-updated"></span>
+</div>
+
+<!-- Fallback note (hidden until error) -->
+<div class="proxy-note hidden" id="proxy-note">
+  <strong>Connection tip:</strong> If the sheet fails to load, try these steps:<br>
+  1. Make sure the sheet is published: <strong>File → Share → Publish to web → CSV</strong><br>
+  2. Check the URL ends with <code>output=csv</code><br>
+  3. Or paste your data below using the manual entry option ↓
+</div>
+
+<!-- Manual fallback -->
+<div id="manual-section" class="hidden" style="margin-bottom:1rem">
+  <div style="font-size:12px;font-weight:500;margin-bottom:6px;color:var(--color-text-secondary)">Manual CSV paste (fallback)</div>
+  <textarea id="csv-paste" rows="5" placeholder="Paste your CSV content here (including header row)…" style="width:100%;padding:8px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);font-size:11px;font-family:var(--font-mono);background:var(--color-background-primary);color:var(--color-text-primary);resize:vertical"></textarea>
+  <button class="btn btn-p" style="margin-top:6px" onclick="loadFromPaste()"><i class="ti ti-check" aria-hidden="true"></i> Load pasted data</button>
 </div>
 
 <!-- TABS -->
