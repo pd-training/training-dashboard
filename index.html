@@ -363,6 +363,187 @@ tr:hover td{background:var(--pc-blue-lighter)}
   <button class="tab" onclick="showTab('nudge')" id="tab-nudge">Email Nudge</button>
   <button class="tab" onclick="showTab('debug')" id="tab-debug">Column Check</button>
 </div>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --pc-blue:#00317A;
+  --pc-blue-mid:#1A4A8A;
+  --pc-blue-light:#E8EEF7;
+  --pc-blue-lighter:#F0F4FA;
+  --pc-gray-light:#EEEEEE;
+  --pc-gray:#AAAAAA;
+  --pc-black:#000000;
+  --pc-white:#FFFFFF;
+  --pc-red:#C0392B;
+  --pc-amber:#B7770D;
+  --pc-green:#1E7A3D;
+  --pc-red-bg:#FDECEA;
+  --pc-amber-bg:#FEF6E4;
+  --pc-green-bg:#E8F5ED;
+  --font:Inter,sans-serif;
+  --radius:4px;
+  --radius-lg:8px;
+}
+body,div,span,td,th,input,select,button,textarea{font-family:var(--font)}
+
+/* ── LAYOUT ── */
+.wrap{padding:.75rem 0}
+.header{background:var(--pc-blue);color:var(--pc-white);padding:1rem 1.25rem;border-radius:var(--radius-lg);margin-bottom:1rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.header-left{}
+.brand-name{font-size:20px;font-weight:700;letter-spacing:-.3px}
+.brand-tagline{font-size:11px;font-weight:500;opacity:.75;margin-top:1px;letter-spacing:.5px}
+.header-sub{font-size:11px;opacity:.65;margin-top:6px}
+.header-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* ── TABS ── */
+.tab-bar{display:flex;gap:0;border-bottom:2px solid var(--pc-blue);margin-bottom:1.25rem;flex-wrap:wrap}
+.tab{padding:8px 14px;font-size:12px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--pc-gray);border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;letter-spacing:.2px;transition:color .15s}
+.tab:hover{color:var(--pc-blue-mid)}
+.tab.active{color:var(--pc-blue);border-bottom:2px solid var(--pc-blue);font-weight:600}
+
+/* ── BUTTONS ── */
+.btn{padding:6px 14px;border-radius:var(--radius);border:1.5px solid var(--pc-blue);background:none;cursor:pointer;font-size:12px;font-weight:600;color:var(--pc-blue);font-family:var(--font);transition:all .15s;letter-spacing:.2px}
+.btn:hover{background:var(--pc-blue-lighter)}
+.btn-primary{background:var(--pc-blue);color:var(--pc-white);border-color:var(--pc-blue)}
+.btn-primary:hover{background:var(--pc-blue-mid)}
+.btn-primary:disabled{background:var(--pc-gray);border-color:var(--pc-gray);cursor:not-allowed}
+.btn-white{background:var(--pc-white);color:var(--pc-blue);border-color:var(--pc-white)}
+.btn-white:hover{background:var(--pc-blue-lighter)}
+
+/* ── METRICS ── */
+.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem}
+.metric{background:var(--pc-white);border:1px solid var(--pc-gray-light);border-radius:var(--radius-lg);padding:14px 16px;border-top:3px solid var(--pc-blue)}
+.mlabel{font-size:10px;color:var(--pc-gray);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;font-weight:600}
+.mval{font-size:22px;font-weight:700;color:var(--pc-blue)}
+.mval.danger{color:var(--pc-red)}
+.mval.warn{color:var(--pc-amber)}
+.mval.good{color:var(--pc-green)}
+
+/* ── BADGES ── */
+.badge{display:inline-block;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:600;letter-spacing:.3px;text-transform:uppercase}
+.b-crit{background:var(--pc-red-bg);color:var(--pc-red);border:1px solid #F5C6C2}
+.b-risk{background:var(--pc-amber-bg);color:var(--pc-amber);border:1px solid #F5DFA0}
+.b-ok{background:var(--pc-green-bg);color:var(--pc-green);border:1px solid #B2DFCA}
+.b-blue{background:var(--pc-blue-light);color:var(--pc-blue);border:1px solid #BED0EC}
+.b-gray{background:var(--pc-gray-light);color:#555;border:1px solid #DDD}
+
+/* ── CHANNEL BADGES ── */
+.ch-PD{background:#E8EEF7;color:var(--pc-blue);border:1px solid #BED0EC;font-size:10px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap}
+.ch-PIC{background:#E8F5ED;color:#1E7A3D;border:1px solid #B2DFCA;font-size:10px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap}
+.ch-AM{background:#FEF6E4;color:#B7770D;border:1px solid #F5DFA0;font-size:10px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap}
+.ch-badge{font-size:10px;padding:2px 7px;border-radius:3px;font-weight:600;white-space:nowrap}
+
+/* ── LICENSE TAGS ── */
+.lic-tag{font-size:9px;padding:2px 6px;border-radius:3px;font-weight:700;letter-spacing:.3px}
+.lic-SAS{background:#E8EEF7;color:var(--pc-blue)}
+.lic-UT{background:#EEF2FF;color:#3730A3}
+.lic-LI{background:#E8F5ED;color:#1E7A3D}
+.lic-GI{background:#FEF6E4;color:#B7770D}
+.lic-MA{background:#FDF2F8;color:#86198F}
+
+/* ── CARDS ── */
+.card{border:1px solid var(--pc-gray-light);border-radius:var(--radius-lg);padding:1rem 1.25rem;margin-bottom:10px;background:var(--pc-white)}
+.card h3{font-size:10px;font-weight:700;color:var(--pc-blue);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--pc-gray-light)}
+.card-blue{background:var(--pc-blue);border-color:var(--pc-blue);color:var(--pc-white)}
+.card-blue h3{color:rgba(255,255,255,.7);border-bottom-color:rgba(255,255,255,.2)}
+
+/* ── TABLE ── */
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;font-size:10px;font-weight:700;color:var(--pc-blue);padding:8px 10px;border-bottom:2px solid var(--pc-blue);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;background:var(--pc-blue-lighter)}
+td{padding:8px 10px;border-bottom:1px solid var(--pc-gray-light);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--pc-blue-lighter)}
+
+/* ── BARS ── */
+.bar-wrap{display:flex;align-items:center;gap:8px}
+.bar-track{flex:1;height:5px;background:var(--pc-gray-light);border-radius:3px;overflow:hidden;min-width:50px}
+.bar-fill{height:100%;border-radius:3px}
+.bar-val{font-size:11px;font-weight:600;color:var(--pc-blue);min-width:24px}
+
+/* ── CPD BARS ── */
+.cpd-bar-wrap{display:flex;align-items:center;gap:8px;min-width:130px}
+.cpd-track{flex:1;height:6px;background:var(--pc-gray-light);border-radius:3px;overflow:hidden}
+.cpd-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--pc-gray-light);font-size:12px}
+.cpd-row:last-child{border-bottom:none}
+
+/* ── MISC ── */
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--pc-blue);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--pc-white);flex-shrink:0;letter-spacing:.5px}
+.flex{display:flex;align-items:center;gap:10px}
+.hidden{display:none}
+.empty{text-align:center;padding:3rem 1rem;color:var(--pc-gray)}
+.empty i{font-size:36px;margin-bottom:12px;display:block;color:var(--pc-gray-light)}
+.search-row{display:flex;gap:8px;margin-bottom:12px;align-items:center;flex-wrap:wrap}
+.search-row input,.search-row select{padding:7px 10px;border-radius:var(--radius);border:1.5px solid var(--pc-gray-light);background:var(--pc-white);font-size:12px;color:#333;font-family:var(--font)}
+.search-row input:focus,.search-row select:focus{outline:none;border-color:var(--pc-blue)}
+.search-row input{flex:1;min-width:140px}
+.month-select{padding:6px 10px;border-radius:var(--radius);border:1.5px solid rgba(255,255,255,.4);background:rgba(255,255,255,.15);font-size:12px;color:var(--pc-white);font-family:var(--font);font-weight:600}
+.month-select option{background:var(--pc-blue);color:var(--pc-white)}
+.url-bar{display:flex;gap:8px;align-items:center;padding:10px 14px;background:var(--pc-blue-lighter);border-radius:var(--radius-lg);margin-bottom:.75rem;border:1px solid var(--pc-blue-light);flex-wrap:wrap}
+.url-bar label{font-size:11px;font-weight:600;color:var(--pc-blue);white-space:nowrap}
+.url-bar input{flex:1;min-width:200px;padding:6px 10px;border-radius:var(--radius);border:1.5px solid var(--pc-blue-light);background:var(--pc-white);font-size:11px;font-family:monospace;color:#333}
+.status-bar{display:flex;align-items:center;gap:10px;font-size:11px;color:#555;margin-bottom:1rem;padding:8px 14px;border-radius:var(--radius-lg);border:1px solid var(--pc-gray-light);background:var(--pc-white)}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot-ok{background:var(--pc-green)}.dot-err{background:var(--pc-red)}.dot-load{background:var(--pc-amber);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dim-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.dim-label{font-size:11px;color:#555;width:160px;flex-shrink:0;font-weight:500}
+.email-box{border:1px solid var(--pc-gray-light);border-radius:var(--radius-lg);padding:1.25rem;font-size:12px;line-height:1.9;background:#FAFBFD;white-space:pre-wrap;font-family:var(--font);color:#333}
+.cpd-alert{padding:8px 12px;border-radius:var(--radius);font-size:11px;margin-bottom:6px;display:flex;gap:8px;align-items:flex-start;font-weight:500}
+.sub-score-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;padding:6px 10px;background:var(--pc-blue-lighter);border-radius:var(--radius)}
+.sub-label{font-size:10px;color:var(--pc-blue);width:120px;flex-shrink:0;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.cat-icon{width:24px;height:24px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;background:var(--pc-blue-light)}
+.section-divider{border:none;border-top:1px solid var(--pc-gray-light);margin:12px 0}
+.module-item{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:var(--pc-blue-lighter);border-radius:var(--radius);margin-bottom:6px;border-left:3px solid var(--pc-blue)}
+.mandatory-item{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;background:var(--pc-blue);border-radius:var(--radius);margin-bottom:6px}
+.mandatory-item *{color:var(--pc-white)!important}
+.adv-count{font-size:11px;color:var(--pc-gray);margin-top:8px}
+</style>
+
+<div class="wrap">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div class="brand-name">PhillipCapital</div>
+    <div class="brand-tagline">Your Partner In Finance</div>
+    <div class="header-sub">Training Gap Dashboard · Advisor Development Programme</div>
+  </div>
+  <div class="header-right">
+    <label style="font-size:11px;color:rgba(255,255,255,.75);font-weight:500">Data month</label>
+    <select class="month-select" id="global-month" onchange="if(advisors.length)renderAll()">
+      <option value="1">January</option><option value="2">February</option><option value="3">March</option><option value="4">April</option><option value="5">May</option><option value="6">June</option><option value="7">July</option><option value="8">August</option><option value="9">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option>
+    </select>
+    <button class="btn btn-white" id="refresh-btn" onclick="loadSheet()"><i class="ti ti-refresh" aria-hidden="true"></i> Refresh data</button>
+  </div>
+</div>
+
+<!-- URL BAR -->
+<div class="url-bar">
+  <i class="ti ti-table" style="color:var(--pc-blue);font-size:14px;flex-shrink:0" aria-hidden="true"></i>
+  <label>Google Sheet CSV URL</label>
+  <input type="text" id="csv-url" value="https://docs.google.com/spreadsheets/d/e/2PACX-1vSdKbh1axceQl2X3_Ee8qYfm3YWkFNmmLuA37Rusg7t0Qs12U-54KwjiBdUv--xJ4k8dlFMKWsZxcTa/pub?gid=0&single=true&output=csv" placeholder="Paste published Google Sheet CSV URL…">
+  <button class="btn btn-primary" onclick="loadSheet()">Load</button>
+</div>
+
+<!-- STATUS -->
+<div class="status-bar" id="status-bar">
+  <div class="dot dot-load" id="status-dot"></div>
+  <span id="status-text">Connecting to Google Sheet…</span>
+  <span style="margin-left:auto;font-size:10px;color:var(--pc-gray)" id="last-updated"></span>
+</div>
+
+<!-- TABS -->
+<div class="tab-bar">
+  <button class="tab active" onclick="showTab('overview')" id="tab-overview">Overview</button>
+  <button class="tab" onclick="showTab('advisors')" id="tab-advisors">Advisor List</button>
+  <button class="tab" onclick="showTab('heatmap')" id="tab-heatmap">Gap Heatmap</button>
+  <button class="tab" onclick="showTab('profile')" id="tab-profile">Advisor Profile</button>
+  <button class="tab" onclick="showTab('nudge')" id="tab-nudge">Email Nudge</button>
+  <button class="tab" onclick="showTab('debug')" id="tab-debug">Column Check</button>
+</div>
 
 <!-- OVERVIEW -->
 <div id="view-overview">
@@ -936,7 +1117,8 @@ Should you have any questions regarding your training plan or CPD requirements, 
 
 Warm regards,
 Training & Development Team
-Phillip Securities Pte Ltd`;
+Phillip Securities Pte Ltd
+Your Partner In Finance`;
 }
 
 function copyEmail(){
