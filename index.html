@@ -1,6 +1,7 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
+.sr-only{position:absolute;left:-9999px}
 .tab-bar{display:flex;gap:2px;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:1.25rem;flex-wrap:wrap}
 .tab{padding:8px 13px;font-size:12px;cursor:pointer;border:none;background:none;color:var(--color-text-secondary);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
 .tab.active{color:var(--color-text-primary);border-bottom-color:#534AB7;font-weight:500}
@@ -17,7 +18,6 @@
 .badge{display:inline-block;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:500}
 .br{background:#FCEBEB;color:#A32D2D}.ba{background:#FAEEDA;color:#854F0B}.bg{background:#EAF3DE;color:#3B6D11}.bp{background:#EEEDFE;color:#3C3489}
 .ch-PD{background:#E6F1FB;color:#185FA5}.ch-PIC{background:#E1F5EE;color:#0F6E56}.ch-AM{background:#FBEAF0;color:#993556}
-.ch-badge{font-size:10px;padding:2px 7px;border-radius:10px;font-weight:500;white-space:nowrap}
 table{width:100%;border-collapse:collapse;font-size:12px}
 th{text-align:left;font-size:10px;font-weight:500;color:var(--color-text-secondary);padding:5px 8px;border-bottom:0.5px solid var(--color-border-tertiary);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
 td{padding:7px 8px;border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:middle}
@@ -28,11 +28,13 @@ tr:hover td{background:var(--color-background-secondary)}
 .bar-fill{height:100%;border-radius:3px}
 .avatar{width:28px;height:28px;border-radius:50%;background:#EEEDFE;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#3C3489;flex-shrink:0}
 .flex{display:flex;align-items:center;gap:8px}
+.tag{font-size:10px;padding:1px 6px;border-radius:10px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary)}
 .lic-tag{font-size:9px;padding:1px 5px;border-radius:10px;font-weight:500}
 .lic-SAS{background:#E6F1FB;color:#185FA5}.lic-UT{background:#EEEDFE;color:#3C3489}.lic-LI{background:#E1F5EE;color:#0F6E56}.lic-GI{background:#FAEEDA;color:#854F0B}.lic-MA{background:#FBEAF0;color:#993556}
 .card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:8px}
 .card h3{font-size:10px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
 .module-item{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);margin-bottom:5px}
+.module-item i{font-size:14px;color:#534AB7;margin-top:1px;flex-shrink:0}
 .mandatory-item{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;background:#EEEDFE;border-radius:var(--border-radius-md);margin-bottom:5px}
 .cpd-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:12px}
 .cpd-row:last-child{border-bottom:none}
@@ -48,46 +50,65 @@ tr:hover td{background:var(--color-background-secondary)}
 .dim-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
 .email-box{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;font-size:12px;line-height:1.8;background:var(--color-background-secondary);white-space:pre-wrap}
 .cpd-alert{padding:8px 10px;border-radius:var(--border-radius-md);font-size:11px;margin-bottom:5px;display:flex;gap:6px;align-items:flex-start}
+.ch-badge{font-size:10px;padding:2px 7px;border-radius:10px;font-weight:500;white-space:nowrap}
 .sub-score-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;padding:6px 8px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)}
 .sub-label{font-size:10px;color:var(--color-text-secondary);width:110px;flex-shrink:0}
 .cat-icon{width:22px;height:22px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
-.url-bar{display:flex;gap:6px;align-items:center;padding:10px 12px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);margin-bottom:.75rem;flex-wrap:wrap}
-.url-bar input{flex:1;min-width:200px;padding:6px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:11px;color:var(--color-text-primary);font-family:monospace}
+.url-bar{display:flex;gap:6px;align-items:center;padding:10px 12px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);margin-bottom:.75rem}
+.url-bar input{flex:1;padding:6px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:11px;color:var(--color-text-primary);font-family:var(--font-mono)}
 .status-bar{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--color-text-secondary);margin-bottom:1rem;padding:8px 12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary)}
 .status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.dot-ok{background:#639922}.dot-err{background:#E24B4A}.dot-loading{background:#EF9F27;animation:pulse 1s infinite}
+.dot-ok{background:#639922}.dot-err{background:#E24B4A}.dot-warn{background:#EF9F27}
+.dot-loading{background:#EF9F27;animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.proxy-note{font-size:11px;padding:8px 12px;background:#FAEEDA;border-radius:var(--border-radius-md);color:#854F0B;margin-bottom:.75rem;line-height:1.6}
 </style>
+
+<h2 class="sr-only">Phillip Securities Training Gap Dashboard v7</h2>
 
 <div style="padding:.75rem 0">
 
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px">
   <div>
     <div style="font-size:16px;font-weight:500">Training Gap Dashboard</div>
-    <div style="font-size:11px;color:var(--color-text-secondary);margin-top:2px">Live from Google Sheets · 4-category model · CPD tracking</div>
+    <div style="font-size:11px;color:var(--color-text-secondary);margin-top:2px">Google Sheets connected · 4-category model · CPD tracking</div>
   </div>
   <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
     <div style="font-size:11px;color:var(--color-text-secondary)">Data month:</div>
     <select id="global-month" onchange="if(advisors.length)renderAll()" style="padding:5px 8px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:12px;color:var(--color-text-primary)">
       <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option><option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option><option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option><option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
     </select>
-    <button class="btn btn-p" id="refresh-btn" onclick="fetchData()"><i class="ti ti-refresh" aria-hidden="true"></i> Refresh from sheet</button>
+    <button class="btn btn-p" id="refresh-btn" onclick="fetchSheet()"><i class="ti ti-refresh" aria-hidden="true"></i> Refresh from sheet</button>
   </div>
 </div>
 
 <!-- URL Bar -->
 <div class="url-bar">
-  <i class="ti ti-script" aria-hidden="true" style="font-size:14px;color:#534AB7;flex-shrink:0"></i>
-  <span style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">Apps Script URL:</span>
-  <input type="text" id="sheet-url" value="https://script.google.com/macros/s/AKfycbyUJfGNLA44aDKfPqysSwWCFya4xYHyexSHo3PdzUkLSTY656ZlWzTNJjEMi6JPd40QGA/exec" placeholder="Paste your Apps Script web app URL…">
-  <button class="btn btn-p" onclick="fetchData()" style="white-space:nowrap">Load</button>
+  <i class="ti ti-table" aria-hidden="true" style="font-size:14px;color:#534AB7;flex-shrink:0"></i>
+  <input type="text" id="sheet-url" value="https://docs.google.com/spreadsheets/d/e/2PACX-1vSdKbh1axceQl2X3_Ee8qYfm3YWkFNmmLuA37Rusg7t0Qs12U-54KwjiBdUv--xJ4k8dlFMKWsZxcTa/pub?gid=0&single=true&output=csv" placeholder="Paste published Google Sheet CSV URL…">
+  <button class="btn btn-p" onclick="fetchSheet()">Load</button>
 </div>
 
 <!-- Status -->
 <div class="status-bar" id="status-bar">
   <div class="status-dot dot-loading" id="status-dot"></div>
-  <span id="status-text">Connecting to Google Sheet…</span>
+  <span id="status-text">Connecting…</span>
   <span style="margin-left:auto;font-size:10px;color:var(--color-text-tertiary)" id="last-updated"></span>
+</div>
+
+<!-- Fallback note (hidden until error) -->
+<div class="proxy-note hidden" id="proxy-note">
+  <strong>Connection tip:</strong> If the sheet fails to load, try these steps:<br>
+  1. Make sure the sheet is published: <strong>File → Share → Publish to web → CSV</strong><br>
+  2. Check the URL ends with <code>output=csv</code><br>
+  3. Or paste your data below using the manual entry option ↓
+</div>
+
+<!-- Manual fallback -->
+<div id="manual-section" class="hidden" style="margin-bottom:1rem">
+  <div style="font-size:12px;font-weight:500;margin-bottom:6px;color:var(--color-text-secondary)">Manual CSV paste (fallback)</div>
+  <textarea id="csv-paste" rows="5" placeholder="Paste your CSV content here (including header row)…" style="width:100%;padding:8px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);font-size:11px;font-family:var(--font-mono);background:var(--color-background-primary);color:var(--color-text-primary);resize:vertical"></textarea>
+  <button class="btn btn-p" style="margin-top:6px" onclick="loadFromPaste()"><i class="ti ti-check" aria-hidden="true"></i> Load pasted data</button>
 </div>
 
 <div class="tab-bar">
@@ -96,12 +117,12 @@ tr:hover td{background:var(--color-background-secondary)}
   <button class="tab" onclick="showTab('heatmap')" id="tab-heatmap">Gap heatmap</button>
   <button class="tab" onclick="showTab('profile')" id="tab-profile">Advisor profile</button>
   <button class="tab" onclick="showTab('nudge')" id="tab-nudge">Email nudge</button>
-  <button class="tab" onclick="showTab('guide')" id="tab-guide">Guide</button>
+  <button class="tab" onclick="showTab('guide')" id="tab-guide">Sheet guide</button>
 </div>
 
 <!-- OVERVIEW -->
 <div id="view-overview">
-  <div id="ov-empty" class="empty"><i class="ti ti-cloud-download" aria-hidden="true"></i><div style="font-weight:500;margin-bottom:4px">Connecting to your Google Sheet…</div><div style="font-size:12px">This should load automatically in a few seconds</div></div>
+  <div id="ov-empty" class="empty"><i class="ti ti-cloud-download" aria-hidden="true"></i><div style="font-weight:500;margin-bottom:4px">Waiting for data</div><div style="font-size:12px">Connecting to your Google Sheet…</div></div>
   <div id="ov-content" class="hidden">
     <div class="metric-grid" id="metric-cards"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
@@ -127,7 +148,7 @@ tr:hover td{background:var(--color-background-secondary)}
     <select id="f-risk" onchange="filterAdvisors()"><option value="">All risk</option><option>Critical</option><option>At risk</option><option>On track</option></select>
     <select id="f-cpd" onchange="filterAdvisors()"><option value="">All CPD</option><option value="cpd-critical">CPD Critical</option><option value="cpd-atrisk">CPD At risk</option><option value="cpd-ok">CPD On track</option></select>
   </div>
-  <div id="adv-empty" class="empty"><i class="ti ti-users" aria-hidden="true"></i><div>Waiting for data…</div></div>
+  <div id="adv-empty" class="empty"><i class="ti ti-users" aria-hidden="true"></i><div>Waiting for sheet data…</div></div>
   <div id="adv-wrap" class="hidden">
     <table>
       <thead><tr><th>Advisor</th><th>Code</th><th>Channel</th><th>Licenses</th><th>Seg</th><th>E&C</th><th>Sales</th><th>Product</th><th>Wealth</th><th>Overall</th><th>Risk</th><th>CPD</th><th></th></tr></thead>
@@ -139,9 +160,9 @@ tr:hover td{background:var(--color-background-secondary)}
 
 <!-- HEATMAP -->
 <div id="view-heatmap" class="hidden">
-  <div id="hm-empty" class="empty"><i class="ti ti-layout-grid" aria-hidden="true"></i><div>Waiting for data…</div></div>
+  <div id="hm-empty" class="empty"><i class="ti ti-layout-grid" aria-hidden="true"></i><div>Waiting for sheet data…</div></div>
   <div id="hm-content" class="hidden">
-    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:8px">4-category gap scores. Red = gap, green = strong. Click any row to open advisor profile.</div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:8px">4-category gap scores. Red = gap, green = strong. Faded = not applicable. Click row to open profile.</div>
     <div style="overflow-x:auto" id="hm-wrap"></div>
     <div style="display:flex;gap:5px;align-items:center;margin-top:10px;font-size:11px;color:var(--color-text-secondary)">
       <span>Gap →</span><div style="width:14px;height:9px;background:#F7C1C1;border-radius:2px"></div><div style="width:14px;height:9px;background:#FAC775;border-radius:2px"></div><div style="width:14px;height:9px;background:#C0DD97;border-radius:2px"></div><div style="width:14px;height:9px;background:#639922;border-radius:2px"></div><span>← Strong</span>
@@ -151,7 +172,7 @@ tr:hover td{background:var(--color-background-secondary)}
 
 <!-- PROFILE -->
 <div id="view-profile" class="hidden">
-  <div class="search-row"><input type="text" id="psrch" placeholder="Search by name or code…" oninput="profileSearch()" style="max-width:320px"></div>
+  <div class="search-row"><input type="text" id="psrch" placeholder="Search advisor by name or code…" oninput="profileSearch()" style="max-width:320px"></div>
   <div id="p-results" style="max-height:160px;overflow-y:auto;margin-bottom:10px;display:none;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md)"><div id="p-list"></div></div>
   <div id="p-empty" class="empty"><i class="ti ti-user-search" aria-hidden="true"></i><div>Search for an advisor to view their profile</div></div>
   <div id="p-content" class="hidden"></div>
@@ -172,36 +193,37 @@ tr:hover td{background:var(--color-background-secondary)}
 <!-- GUIDE -->
 <div id="view-guide" class="hidden">
   <div class="card">
-    <h3>How this dashboard connects to your Google Sheet</h3>
-    <div style="font-size:12px;line-height:1.8;color:var(--color-text-secondary);margin-bottom:12px">
-      Your data flows directly from Google Sheets via an Apps Script web app — no file uploads, no proxies. Any changes your product teams make in the sheet appear instantly after clicking <strong style="color:var(--color-text-primary)">Refresh from sheet</strong>.
-    </div>
-    <div style="padding:10px;background:#EAF3DE;border-radius:var(--border-radius-md);font-size:11px;color:#3B6D11;margin-bottom:12px;line-height:1.8">
-      <strong style="display:block;margin-bottom:4px">✓ Your Apps Script endpoint is saved</strong>
-      If you ever need to replace it: deploy a new version in Apps Script → paste the new URL in the URL bar above → click Load.
-    </div>
-    <table>
-      <thead><tr><th>Column</th><th>Format</th><th>Example</th><th>Notes</th></tr></thead>
+    <h3>Google Sheet column guide</h3>
+    <table style="margin-top:4px">
+      <thead><tr><th>Column header</th><th>Format</th><th>Example</th><th>Notes</th></tr></thead>
       <tbody>
         <tr><td>AdvisorName</td><td>Text</td><td>Jane Tan</td><td></td></tr>
-        <tr><td>AdvisorCode</td><td>Text</td><td>PS1042</td><td>Required — unique ID</td></tr>
+        <tr><td>AdvisorCode</td><td>Text</td><td>PS1042</td><td>Unique ID — required</td></tr>
         <tr><td>Email</td><td>Email</td><td>jane@phillipsec.com.sg</td><td></td></tr>
         <tr><td>Channel</td><td>Text</td><td>Partnership Dept</td><td>Partnership Dept / Phillip Investor Center / Affluent Market</td></tr>
         <tr><td>LicensedActivities</td><td>Comma-separated</td><td>LI,UT</td><td>SAS UT LI GI MA</td></tr>
         <tr><td>Tenure_Years</td><td>Number</td><td>3.5</td><td></td></tr>
-        <tr><td>Cases_SAS / UT / LI / GI / MA</td><td>Number</td><td>4</td><td>Avg cases/month</td></tr>
+        <tr><td>Cases_SAS</td><td>Number</td><td>2</td><td>Avg cases/month</td></tr>
+        <tr><td>Cases_UT</td><td>Number</td><td>3</td><td></td></tr>
+        <tr><td>Cases_LI</td><td>Number</td><td>5</td><td></td></tr>
+        <tr><td>Cases_GI</td><td>Number</td><td>0</td><td></td></tr>
+        <tr><td>Cases_MA</td><td>Number</td><td>0</td><td></td></tr>
         <tr><td>NTU_Rate</td><td>Decimal 0–1</td><td>0.12</td><td>12% = 0.12</td></tr>
         <tr><td>Persistency</td><td>Decimal 0–1</td><td>0.87</td><td>Rolling 12-month</td></tr>
         <tr><td>CPD_Core_Done</td><td>Hours</td><td>4</td><td>Required: 6/year</td></tr>
         <tr><td>CPD_Supp_Done</td><td>Hours</td><td>10</td><td>Required: 24/year</td></tr>
-        <tr><td>CPD_MSL_Done</td><td>Hours</td><td>1</td><td>LI only. Required: 2/year. Enter 0 if N/A</td></tr>
-        <tr><td>CPD_GI_Done</td><td>Hours</td><td>0</td><td>GI only. Required: 8/year. Enter 0 if N/A</td></tr>
+        <tr><td>CPD_MSL_Done</td><td>Hours</td><td>1</td><td>LI only. Required: 2/year</td></tr>
+        <tr><td>CPD_GI_Done</td><td>Hours</td><td>0</td><td>GI only. Required: 8/year</td></tr>
         <tr><td>Data_Month</td><td>1–12</td><td>6</td><td>Month data was pulled</td></tr>
       </tbody>
     </table>
     <div style="margin-top:12px;padding:10px;background:#EEEDFE;border-radius:var(--border-radius-md);font-size:11px;color:#3C3489;line-height:1.8">
       <strong style="display:block;margin-bottom:4px">Future: add these columns when Cyberquote quiz data is ready</strong>
       Quiz_Ethics · Quiz_Sales · Quiz_Product_Insurance · Quiz_Product_Investment · Quiz_Wealth (score 0–100)
+    </div>
+    <div style="margin-top:10px;padding:10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);font-size:11px;line-height:1.8;color:var(--color-text-secondary)">
+      <strong style="color:var(--color-text-primary);display:block;margin-bottom:4px">How to publish your sheet as CSV</strong>
+      File → Share → Publish to web → select your tab → select CSV → Publish → copy URL
     </div>
   </div>
 </div>
@@ -210,6 +232,7 @@ tr:hover td{background:var(--color-background-secondary)}
 
 <script>
 let advisors=[];
+const CHANNELS=['Partnership Dept','Phillip Investor Center','Affluent Market'];
 const CH_SHORT={'Partnership Dept':'PD','Phillip Investor Center':'PIC','Affluent Market':'AM'};
 const CATS=[
   {key:'ethics',label:'Ethics & Compliance',icon:'ti-shield-check',color:'#534AB7',bg:'#EEEDFE'},
@@ -226,71 +249,99 @@ const COURSES={
 };
 const CPD_REQS={core:6,supp:24,msl:2,gi:8};
 
+// ── Fetch with multiple proxy fallbacks ──
+const PROXIES=[
+  url=>`https://corsproxy.io/?${encodeURIComponent(url)}`,
+  url=>`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+  url=>`https://thingproxy.freeboard.io/fetch/${url}`,
+  url=>url  // direct attempt last (works if sheet is truly public)
+];
+
+async function fetchWithFallback(targetUrl){
+  let lastErr='';
+  for(let i=0;i<PROXIES.length;i++){
+    const proxyUrl=PROXIES[i](targetUrl);
+    setStatus('loading',`Trying connection method ${i+1} of ${PROXIES.length}…`,'');
+    try{
+      const ctrl=new AbortController();
+      const timer=setTimeout(()=>ctrl.abort(),8000);
+      const res=await fetch(proxyUrl,{signal:ctrl.signal});
+      clearTimeout(timer);
+      if(!res.ok) throw new Error('HTTP '+res.status);
+      const text=await res.text();
+      if(!text||text.trim().length<10) throw new Error('Empty response');
+      // Sanity check — should look like CSV not HTML error page
+      if(text.trim().startsWith('<!DOCTYPE')||text.trim().startsWith('<html')) throw new Error('Got HTML instead of CSV');
+      return text;
+    }catch(e){
+      lastErr=e.message;
+      continue;
+    }
+  }
+  throw new Error(lastErr||'All connection methods failed');
+}
+
 function getMonth(){return parseInt(document.getElementById('global-month').value)||6;}
 function cpdUrgencyWeight(m){return m<=4?0.3:m<=8?0.6:m<=10?0.85:1.0;}
 function expectedByNow(req,m){return Math.ceil(req*(m/12));}
-function cpdGapScore(done,req,m){const e=expectedByNow(req,m);if(done>=req)return 5;if(done>=e)return 4;const r=done/Math.max(e,1);return r>=0.75?3:r>=0.5?2:1;}
-
+function cpdGapScore(done,req,m){
+  const exp=expectedByNow(req,m);
+  if(done>=req)return 5;if(done>=exp)return 4;
+  const r=done/Math.max(exp,1);return r>=0.75?3:r>=0.5?2:1;
+}
 function getCpdStatus(a,month){
-  const w=cpdUrgencyWeight(month),hasLI=a.licenses.includes('LI'),hasGI=a.licenses.includes('GI');
+  const w=cpdUrgencyWeight(month);
+  const hasLI=a.licenses.includes('LI'),hasGI=a.licenses.includes('GI');
   const checks=[
-    {type:'Core CPD (Ethics/Rules & Regs)',done:a.cpd.core,required:6,score:cpdGapScore(a.cpd.core,6,month)},
-    {type:'Supplementary CPD',done:a.cpd.supp,required:24,score:cpdGapScore(a.cpd.supp,24,month)}
+    {type:'Core CPD (Ethics/Rules & Regs)',done:a.cpd.core,required:CPD_REQS.core,score:cpdGapScore(a.cpd.core,CPD_REQS.core,month)},
+    {type:'Supplementary CPD',done:a.cpd.supp,required:CPD_REQS.supp,score:cpdGapScore(a.cpd.supp,CPD_REQS.supp,month)}
   ];
-  if(hasLI)checks.push({type:'MSL Hours (LI)',done:a.cpd.msl,required:2,score:cpdGapScore(a.cpd.msl,2,month)});
-  if(hasGI)checks.push({type:'GI Hours',done:a.cpd.gi,required:8,score:cpdGapScore(a.cpd.gi,8,month)});
-  const avg=checks.reduce((s,c)=>s+c.score,0)/checks.length;
-  const ws=Math.max(1,Math.min(5,avg*(0.7+w*0.3)));
+  if(hasLI)checks.push({type:'MSL Hours (LI)',done:a.cpd.msl,required:CPD_REQS.msl,score:cpdGapScore(a.cpd.msl,CPD_REQS.msl,month)});
+  if(hasGI)checks.push({type:'GI Hours',done:a.cpd.gi,required:CPD_REQS.gi,score:cpdGapScore(a.cpd.gi,CPD_REQS.gi,month)});
+  const avgScore=checks.reduce((s,c)=>s+c.score,0)/checks.length;
+  const ws=Math.max(1,Math.min(5,avgScore*(0.7+w*0.3)));
   const gaps=checks.filter(c=>c.done<c.required).map(c=>({...c,shortfall:c.required-c.done,onTrack:c.done>=expectedByNow(c.required,month)}));
   let cpdRisk='On track';
-  if(gaps.length){const sev=w*(1-(avg/5));cpdRisk=sev>=0.6||month>=11?'Critical':month>=9||sev>=0.3?'At risk':'At risk';}
+  if(gaps.length){const sev=w*(1-(avgScore/5));cpdRisk=sev>=0.6||month>=11?'Critical':month>=9||sev>=0.3?'At risk':'At risk';}
   return{checks,gaps,avgScore:Math.round(ws*10)/10,cpdRisk};
 }
-
 function getSegment(t){return t<2?'New':t<5?'Mid':'Experienced';}
 function pS(c){return c>=10?5:c>=6?4:c>=3?3:c>=1?2:0;}
 function nS(n){return n<=0.05?5:n<=0.10?4:n<=0.20?3:n<=0.30?2:1;}
 function perS(p){return p>=0.90?5:p>=0.80?4:p>=0.70?3:p>=0.60?2:1;}
 
-function scoreCategories(a,month){
-  const lics=a.licenses,hasLI=lics.includes('LI'),hasGI=lics.includes('GI'),hasSAS=lics.includes('SAS'),hasUT=lics.includes('UT'),hasMA=lics.includes('MA');
+function scoreCategories(a,month,quiz){
+  const lics=a.licenses;
+  const hasLI=lics.includes('LI'),hasGI=lics.includes('GI'),hasSAS=lics.includes('SAS'),hasUT=lics.includes('UT'),hasMA=lics.includes('MA');
   const hasIns=hasLI||hasGI,hasInv=hasSAS||hasUT||hasMA,hasW=hasSAS||hasMA;
   const ntu=nS(a.ntu_rate),pers=perS(a.persistency),cpdS=a.cpdStatus.avgScore;
+  const qS=v=>v==null||v===0?null:Math.max(1,Math.min(5,1+(v/100)*4));
   const actLics=lics.filter(l=>a.cases[l]>0);
   const avgP=actLics.length?actLics.reduce((s,l)=>s+pS(a.cases[l]||0),0)/actLics.length:0;
-  const ethics=cpdGapScore(a.cpd.core,6,month)*0.6+cpdGapScore(a.cpd.supp,24,month)*0.2+ntu*0.2;
-  const sales=avgP*0.4+ntu*0.3+pers*0.3;
+  const qE=qS(quiz&&quiz.ethics);
+  const ethics=qE!=null?cpdS*0.4+qE*0.4+ntu*0.2:cpdGapScore(a.cpd.core,6,month)*0.6+cpdGapScore(a.cpd.supp,24,month)*0.2+ntu*0.2;
+  const qSa=qS(quiz&&quiz.sales);
+  const sales=qSa!=null?avgP*0.3+ntu*0.2+pers*0.2+qSa*0.3:avgP*0.4+ntu*0.3+pers*0.3;
   let insSub=null,invSub=null;
-  if(hasIns){const iA=(['LI','GI']).filter(l=>lics.includes(l)&&(a.cases[l]||0)>0);const iP=iA.length?iA.reduce((s,l)=>s+pS(a.cases[l]||0),0)/iA.length:1;insSub=iP*0.7+ntu*0.3;}
-  if(hasInv){const vA=(['SAS','UT','MA']).filter(l=>lics.includes(l)&&(a.cases[l]||0)>0);const vP=vA.length?vA.reduce((s,l)=>s+pS(a.cases[l]||0),0)/vA.length:1;invSub=vP*0.7+pers*0.3;}
+  if(hasIns){const iA=(['LI','GI']).filter(l=>lics.includes(l)&&(a.cases[l]||0)>0);const iP=iA.length?iA.reduce((s,l)=>s+pS(a.cases[l]||0),0)/iA.length:1;const qI=qS(quiz&&quiz.product_ins);insSub=qI!=null?iP*0.45+ntu*0.2+qI*0.35:iP*0.7+ntu*0.3;}
+  if(hasInv){const vA=(['SAS','UT','MA']).filter(l=>lics.includes(l)&&(a.cases[l]||0)>0);const vP=vA.length?vA.reduce((s,l)=>s+pS(a.cases[l]||0),0)/vA.length:1;const qV=qS(quiz&&quiz.product_inv);invSub=qV!=null?vP*0.45+pers*0.2+qV*0.35:vP*0.7+pers*0.3;}
   let product=null;
   if(insSub!=null&&invSub!=null)product=(insSub+invSub)/2;else if(insSub!=null)product=insSub;else if(invSub!=null)product=invSub;
   let wealth=null;
-  if(hasW){const wA=(['SAS','MA']).filter(l=>lics.includes(l)&&(a.cases[l]||0)>0);const wP=wA.length?wA.reduce((s,l)=>s+pS(a.cases[l]||0),0)/wA.length:1;wealth=wP*0.5+pers*0.3+ntu*0.2;}
+  if(hasW){const wA=(['SAS','MA']).filter(l=>lics.includes(l)&&(a.cases[l]||0)>0);const wP=wA.length?wA.reduce((s,l)=>s+pS(a.cases[l]||0),0)/wA.length:1;const qW=qS(quiz&&quiz.wealth);wealth=qW!=null?wP*0.35+pers*0.2+ntu*0.1+qW*0.35:wP*0.5+pers*0.3+ntu*0.2;}
   const seg=a.seg;
   const sw=seg==='New'?{ethics:1.35,sales:1.0,product:1.25,wealth:0.7}:seg==='Mid'?{ethics:1.1,sales:1.25,product:1.1,wealth:1.0}:{ethics:1.0,sales:1.0,product:1.0,wealth:1.2};
   const cl=v=>v==null?null:Math.min(5,Math.max(1,Math.round(v*10)/10));
   const scores={ethics:cl(ethics*sw.ethics),sales:cl(sales*sw.sales),product:product!=null?cl(product*sw.product):null,wealth:wealth!=null?cl(wealth*sw.wealth):null,insSub:insSub!=null?cl(insSub):null,invSub:invSub!=null?cl(invSub):null};
   const app=[scores.ethics,scores.sales,scores.product,scores.wealth].filter(v=>v!=null);
-  return{scores,overall:Math.round(app.reduce((s,v)=>s+v,0)/app.length*10)/10,insSub:scores.insSub,invSub:scores.invSub};
+  return{scores,overall:Math.round(app.reduce((s,v)=>s+v,0)/app.length*10)/10,insSub:scores.insSub,invSub:scores.invSub,hasIns,hasInv,hasW};
 }
 
-function processAdvisor(raw,month){
-  const g=v=>typeof v==='string'?v.trim():String(v||'').trim();
-  const n=v=>parseFloat(String(v).replace(/[^0-9.-]/g,''))||0;
-  const lics=g(raw.LicensedActivities).split(',').map(l=>l.trim()).filter(Boolean);
-  const a={
-    name:g(raw.AdvisorName),code:g(raw.AdvisorCode),email:g(raw.Email),
-    channel:g(raw.Channel),licenses:lics,tenure:n(raw.Tenure_Years),
-    cases:{SAS:n(raw.Cases_SAS),UT:n(raw.Cases_UT),LI:n(raw.Cases_LI),GI:n(raw.Cases_GI),MA:n(raw.Cases_MA)},
-    ntu_rate:n(raw.NTU_Rate),persistency:n(raw.Persistency)||0.8,
-    cpd:{core:n(raw.CPD_Core_Done),supp:n(raw.CPD_Supp_Done),msl:n(raw.CPD_MSL_Done),gi:n(raw.CPD_GI_Done)},
-    dataMonth:parseInt(raw.Data_Month)||month
-  };
+function processAdvisor(a,month){
   const seg=getSegment(a.tenure);
-  const cpdStatus=getCpdStatus({...a},a.dataMonth||month);
+  const cpdStatus=getCpdStatus({...a},month);
   const en={...a,seg,cpdStatus};
-  const{scores,overall,insSub,invSub}=scoreCategories(en,a.dataMonth||month);
+  const{scores,overall,insSub,invSub,hasIns,hasInv,hasW}=scoreCategories(en,month,a.quiz||null);
   let risk=overall<2.5?'Critical':overall<3.5?'At risk':'On track';
   if(cpdStatus.cpdRisk==='Critical'&&risk==='On track')risk='At risk';
   if(cpdStatus.cpdRisk==='Critical'&&risk==='At risk')risk='Critical';
@@ -299,39 +350,84 @@ function processAdvisor(raw,month){
   return{...en,scores,overall,risk,gaps,insSub,invSub};
 }
 
+function parseCSV(text){
+  const lines=text.split('\n').filter(l=>l.trim());
+  if(lines.length<2)throw new Error('CSV has fewer than 2 rows — check your sheet has data');
+  const headers=lines[0].split(',').map(h=>h.trim().replace(/"/g,'').replace(/\r/g,''));
+  if(!headers.includes('AdvisorCode'))throw new Error('Missing AdvisorCode column — check your column headers match exactly');
+  return lines.slice(1).map(line=>{
+    const vals=[];let cur='',inQ=false;
+    for(const c of line){if(c==='"'){inQ=!inQ;}else if(c===','&&!inQ){vals.push(cur.trim());cur='';}else{cur+=c;}}
+    vals.push(cur.trim().replace(/\r/g,''));
+    const obj={};headers.forEach((h,i)=>obj[h]=(vals[i]||'').replace(/"/g,'').trim());
+    return obj;
+  });
+}
+
+function rowToAdvisor(obj){
+  const lics=obj.LicensedActivities?obj.LicensedActivities.split(',').map(l=>l.trim()).filter(Boolean):[];
+  return{
+    name:obj.AdvisorName||'',code:obj.AdvisorCode||'',email:obj.Email||'',
+    channel:obj.Channel||'',licenses:lics,tenure:parseFloat(obj.Tenure_Years)||0,
+    cases:{SAS:parseFloat(obj.Cases_SAS)||0,UT:parseFloat(obj.Cases_UT)||0,LI:parseFloat(obj.Cases_LI)||0,GI:parseFloat(obj.Cases_GI)||0,MA:parseFloat(obj.Cases_MA)||0},
+    ntu_rate:parseFloat(obj.NTU_Rate)||0,persistency:parseFloat(obj.Persistency)||0.8,
+    cpd:{core:parseFloat(obj.CPD_Core_Done)||0,supp:parseFloat(obj.CPD_Supp_Done)||0,msl:parseFloat(obj.CPD_MSL_Done)||0,gi:parseFloat(obj.CPD_GI_Done)||0},
+    dataMonth:parseInt(obj.Data_Month)||getMonth(),
+    quiz:obj.Quiz_Ethics?{ethics:parseFloat(obj.Quiz_Ethics)||0,sales:parseFloat(obj.Quiz_Sales)||0,product_ins:parseFloat(obj.Quiz_Product_Insurance)||0,product_inv:parseFloat(obj.Quiz_Product_Investment)||0,wealth:parseFloat(obj.Quiz_Wealth)||0}:null
+  };
+}
+
+function processCSVText(text){
+  const rows=parseCSV(text);
+  const valid=rows.filter(r=>r.AdvisorCode&&r.AdvisorCode.trim());
+  if(!valid.length)throw new Error('No valid advisor rows found — ensure AdvisorCode column is filled');
+  const month=getMonth();
+  return valid.map(r=>{const a=rowToAdvisor(r);return processAdvisor(a,a.dataMonth||month);});
+}
+
 function setStatus(state,msg,extra){
-  const dot=document.getElementById('status-dot'),txt=document.getElementById('status-text'),upd=document.getElementById('last-updated');
-  dot.className='status-dot '+(state==='ok'?'dot-ok':state==='err'?'dot-err':'dot-loading');
+  const dot=document.getElementById('status-dot');
+  const txt=document.getElementById('status-text');
+  const upd=document.getElementById('last-updated');
+  dot.className='status-dot '+(state==='ok'?'dot-ok':state==='err'?'dot-err dot-warn':'dot-loading');
   txt.textContent=msg;
   if(extra!=null)upd.textContent=extra;
 }
 
-async function fetchData(){
+async function fetchSheet(){
   const url=document.getElementById('sheet-url').value.trim();
-  if(!url){setStatus('err','No URL entered');return;}
+  if(!url){setStatus('err','No URL provided');return;}
   const btn=document.getElementById('refresh-btn');
   btn.disabled=true;btn.innerHTML='<i class="ti ti-refresh" aria-hidden="true"></i> Fetching…';
-  setStatus('loading','Connecting to Google Sheet…','');
+  document.getElementById('proxy-note').classList.add('hidden');
+  document.getElementById('manual-section').classList.add('hidden');
   try{
-    const ctrl=new AbortController();
-    setTimeout(()=>ctrl.abort(),15000);
-    const res=await fetch(url,{signal:ctrl.signal});
-    if(!res.ok)throw new Error('HTTP '+res.status);
-    const data=await res.json();
-    if(!Array.isArray(data)||!data.length)throw new Error('No data returned — make sure your sheet has rows below the header');
-    if(!data[0].AdvisorCode&&!data[0].advisorCode)throw new Error('AdvisorCode column not found — check your sheet headers match exactly');
-    const month=getMonth();
-    advisors=data.filter(r=>{const code=r.AdvisorCode||r.advisorCode||'';return String(code).trim()!=='';}).map(r=>processAdvisor(r,month));
-    if(!advisors.length)throw new Error('No valid advisors found — ensure AdvisorCode column has values');
+    const text=await fetchWithFallback(url);
+    advisors=processCSVText(text);
     const now=new Date();
     setStatus('ok',`${advisors.length} advisors loaded successfully`,`Updated: ${now.toLocaleTimeString('en-SG',{hour:'2-digit',minute:'2-digit'})}`);
     renderAll();showTab('overview');
   }catch(err){
-    let msg=err.message;
-    if(err.name==='AbortError')msg='Request timed out — check your Apps Script URL is correct and deployed as "Anyone"';
-    setStatus('err','Connection failed: '+msg,'');
+    setStatus('err','Could not load sheet — '+err.message,'');
+    document.getElementById('proxy-note').classList.remove('hidden');
+    document.getElementById('manual-section').classList.remove('hidden');
   }finally{
     btn.disabled=false;btn.innerHTML='<i class="ti ti-refresh" aria-hidden="true"></i> Refresh from sheet';
+  }
+}
+
+function loadFromPaste(){
+  const text=document.getElementById('csv-paste').value.trim();
+  if(!text){alert('Please paste CSV content first.');return;}
+  try{
+    advisors=processCSVText(text);
+    const now=new Date();
+    setStatus('ok',`${advisors.length} advisors loaded from pasted data`,`Updated: ${now.toLocaleTimeString('en-SG',{hour:'2-digit',minute:'2-digit'})}`);
+    document.getElementById('manual-section').classList.add('hidden');
+    document.getElementById('proxy-note').classList.add('hidden');
+    renderAll();showTab('overview');
+  }catch(err){
+    setStatus('err','Could not parse pasted data — '+err.message,'');
   }
 }
 
@@ -419,7 +515,8 @@ function renderAdvisorTable(data){
 }
 
 function filterAdvisors(){
-  const q=document.getElementById('srch').value.toLowerCase(),seg=document.getElementById('f-seg').value,lic=document.getElementById('f-lic').value,ch=document.getElementById('f-ch').value,risk=document.getElementById('f-risk').value,cpdf=document.getElementById('f-cpd').value;
+  const q=document.getElementById('srch').value.toLowerCase();
+  const seg=document.getElementById('f-seg').value,lic=document.getElementById('f-lic').value,ch=document.getElementById('f-ch').value,risk=document.getElementById('f-risk').value,cpdf=document.getElementById('f-cpd').value;
   renderAdvisorTable(advisors.filter(a=>{
     const mq=!q||(a.name.toLowerCase().includes(q)||a.code.toLowerCase().includes(q)||a.email.toLowerCase().includes(q));
     return mq&&(!seg||a.seg===seg)&&(!lic||a.licenses.includes(lic))&&(!ch||a.channel===ch)&&(!risk||a.risk===risk)&&(!cpdf||(cpdf==='cpd-critical'&&a.cpdStatus.cpdRisk==='Critical')||(cpdf==='cpd-atrisk'&&a.cpdStatus.cpdRisk==='At risk')||(cpdf==='cpd-ok'&&a.cpdStatus.cpdRisk==='On track'));
@@ -452,8 +549,9 @@ function openProfile(code){
 }
 
 function renderProfile(a){
-  const month=getMonth(),cpd=a.cpdStatus,hasLI=a.licenses.includes('LI'),hasGI=a.licenses.includes('GI');
+  const month=getMonth();
   document.getElementById('p-empty').classList.add('hidden');document.getElementById('p-content').classList.remove('hidden');
+  const cpd=a.cpdStatus,hasLI=a.licenses.includes('LI'),hasGI=a.licenses.includes('GI');
   let cpdRows=`<div class="cpd-row"><span>Core CPD (Ethics/Rules & Regs)</span>${cpdBar(a.cpd.core,6)}</div><div class="cpd-row"><span>Supplementary CPD</span>${cpdBar(a.cpd.supp,24)}</div>`;
   if(hasLI)cpdRows+=`<div class="cpd-row"><span>MSL Hours (LI)</span>${cpdBar(a.cpd.msl,2)}</div>`;
   if(hasGI)cpdRows+=`<div class="cpd-row"><span>GI Hours</span>${cpdBar(a.cpd.gi,8)}</div>`;
@@ -461,40 +559,21 @@ function renderProfile(a){
   const gapMods=a.gaps.slice(0,3).map(g=>{let mods=COURSES.ethics;if(g.key==='sales')mods=COURSES.sales;else if(g.key==='product')mods=a.insSub!=null&&(a.invSub==null||a.insSub<a.invSub)?COURSES.product_ins:COURSES.product_inv;else if(g.key==='wealth')mods=COURSES.wealth;return{...g,mod:mods[0],mod2:mods[1]};});
   document.getElementById('p-content').innerHTML=`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px">
-      <div class="flex"><div class="avatar" style="width:40px;height:40px;font-size:13px">${initials(a.name)}</div>
-        <div><div style="font-size:15px;font-weight:500">${a.name}</div>
-        <div style="font-size:11px;color:var(--color-text-secondary)">${a.code} · ${a.email}</div>
-        <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center">${chBadge(a.channel)}<span class="badge bp">${a.seg} · ${a.tenure}y</span>${licTags(a.licenses)}</div></div>
-      </div>
+      <div class="flex"><div class="avatar" style="width:40px;height:40px;font-size:13px">${initials(a.name)}</div><div><div style="font-size:15px;font-weight:500">${a.name}</div><div style="font-size:11px;color:var(--color-text-secondary)">${a.code} · ${a.email}</div><div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center">${chBadge(a.channel)}<span class="badge bp">${a.seg} · ${a.tenure}y</span>${licTags(a.licenses)}</div></div></div>
       <div style="text-align:right;display:flex;flex-direction:column;gap:4px;align-items:flex-end">${riskBadge(a.risk)}${cpdBadge(cpd.cpdRisk)}<div style="font-size:18px;font-weight:500">${a.overall}<span style="font-size:11px;color:var(--color-text-secondary)">/5</span></div></div>
     </div>
     <div class="profile-grid">
       <div>
         <div class="card"><h3>Gap scores — 4 categories</h3>
-          ${CATS.map(c=>{const s=a.scores[c.key],ok=s!=null;return`
-            <div class="dim-row"><div style="display:flex;align-items:center;gap:6px;width:165px;flex-shrink:0"><div class="cat-icon" style="background:${ok?c.bg:'var(--color-background-secondary)'}"><i class="ti ${c.icon}" aria-hidden="true" style="color:${ok?c.color:'var(--color-text-tertiary)'};font-size:12px"></i></div><span style="font-size:11px;color:var(--color-text-secondary);${!ok?'opacity:.4':''}">${c.label}</span></div>${ok?barFill(s):'<span style="font-size:10px;color:var(--color-text-tertiary)">Not applicable</span>'}</div>
-            ${c.key==='product'&&ok?`<div style="margin-left:28px;margin-bottom:4px">${a.insSub!=null?`<div class="sub-score-row"><span class="sub-label"><i class="ti ti-shield" aria-hidden="true" style="font-size:11px;margin-right:4px"></i>Insurance</span>${barFill(a.insSub,true)}</div>`:''} ${a.invSub!=null?`<div class="sub-score-row"><span class="sub-label"><i class="ti ti-trending-up" aria-hidden="true" style="font-size:11px;margin-right:4px"></i>Investment</span>${barFill(a.invSub,true)}</div>`:''}</div>`:''}`;}).join('')}
-          <div style="font-size:10px;color:#534AB7;padding:4px 8px;background:#EEEDFE;border-radius:var(--border-radius-md);margin-top:6px"><i class="ti ti-info-circle" aria-hidden="true" style="font-size:11px;margin-right:4px"></i>Production-based scoring. Quiz data from Cyberquote can be added to improve accuracy.</div>
+          ${CATS.map(c=>{const s=a.scores[c.key],ok=s!=null;return`<div class="dim-row"><div style="display:flex;align-items:center;gap:6px;width:165px;flex-shrink:0"><div class="cat-icon" style="background:${ok?c.bg:'var(--color-background-secondary)'}"><i class="ti ${c.icon}" aria-hidden="true" style="color:${ok?c.color:'var(--color-text-tertiary)'};font-size:12px"></i></div><span style="font-size:11px;color:var(--color-text-secondary);${!ok?'opacity:.4':''}">${c.label}</span></div>${ok?barFill(s):'<span style="font-size:10px;color:var(--color-text-tertiary)">Not applicable</span>'}</div>${c.key==='product'&&ok?`<div style="margin-left:28px;margin-bottom:4px">${a.insSub!=null?`<div class="sub-score-row"><span class="sub-label"><i class="ti ti-shield" aria-hidden="true" style="font-size:11px;margin-right:4px"></i>Insurance</span>${barFill(a.insSub,true)}</div>`:''} ${a.invSub!=null?`<div class="sub-score-row"><span class="sub-label"><i class="ti ti-trending-up" aria-hidden="true" style="font-size:11px;margin-right:4px"></i>Investment</span>${barFill(a.invSub,true)}</div>`:''}</div>`:''}`; }).join('')}
+          <div style="font-size:10px;color:#534AB7;padding:4px 8px;background:#EEEDFE;border-radius:var(--border-radius-md);margin-top:6px"><i class="ti ti-info-circle" aria-hidden="true" style="font-size:11px;margin-right:4px"></i>Scored from production data. Quiz scores can be added later.</div>
         </div>
-        <div class="card"><h3>Production snapshot</h3>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;font-size:11px">
-            ${['SAS','UT','LI','GI','MA'].map(l=>`<div style="${!a.licenses.includes(l)?'opacity:.3':''}"><span style="color:var(--color-text-secondary)">${l}:</span> <strong>${a.cases[l]||0} cases/mo</strong></div>`).join('')}
-            <div><span style="color:var(--color-text-secondary)">NTU rate:</span> <strong>${Math.round(a.ntu_rate*100)}%</strong></div>
-            <div><span style="color:var(--color-text-secondary)">Persistency:</span> <strong>${Math.round(a.persistency*100)}%</strong></div>
-          </div>
-        </div>
+        <div class="card"><h3>Production snapshot</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;font-size:11px">${['SAS','UT','LI','GI','MA'].map(l=>`<div style="${!a.licenses.includes(l)?'opacity:.3':''}"><span style="color:var(--color-text-secondary)">${l}:</span> <strong>${a.cases[l]||0} cases/mo</strong></div>`).join('')}<div><span style="color:var(--color-text-secondary)">NTU rate:</span> <strong>${Math.round(a.ntu_rate*100)}%</strong></div><div><span style="color:var(--color-text-secondary)">Persistency:</span> <strong>${Math.round(a.persistency*100)}%</strong></div></div></div>
       </div>
       <div>
-        <div class="card"><h3>CPD hours — ${monthName(month)} status</h3>
-          ${gapAlerts||'<div style="padding:6px 10px;background:#EAF3DE;border-radius:var(--border-radius-md);font-size:11px;color:#3B6D11;margin-bottom:8px"><i class="ti ti-circle-check" aria-hidden="true"></i> All CPD on track</div>'}
-          ${cpdRows}
-        </div>
-        <div class="card"><h3>Mandatory for all advisors</h3>
-          <div class="mandatory-item"><i class="ti ti-shield-check" aria-hidden="true"></i><div style="font-size:12px;font-weight:500">Ethics and Fair Dealing<div style="font-size:10px;color:#534AB7;font-weight:400">Counts toward Core CPD</div></div></div>
-        </div>
-        <div class="card"><h3>Recommended modules</h3>
-          ${gapMods.length?gapMods.map(g=>`<div class="module-item"><i class="ti ti-book" aria-hidden="true"></i><div><div style="font-size:12px;font-weight:500">${g.mod}</div><div style="font-size:10px;color:var(--color-text-secondary)">${g.label} · score ${g.score.toFixed(1)}/5</div>${g.mod2?`<div style="font-size:10px;color:var(--color-text-tertiary)">Also: ${g.mod2}</div>`:''}</div></div>`).join(''):'<div style="font-size:12px;color:var(--color-text-secondary)">No significant gaps detected.</div>'}
-        </div>
+        <div class="card"><h3>CPD hours — ${monthName(month)} status</h3>${gapAlerts||'<div style="padding:6px 10px;background:#EAF3DE;border-radius:var(--border-radius-md);font-size:11px;color:#3B6D11;margin-bottom:8px"><i class="ti ti-circle-check" aria-hidden="true"></i> All CPD on track</div>'}${cpdRows}</div>
+        <div class="card"><h3>Mandatory for all advisors</h3><div class="mandatory-item"><i class="ti ti-shield-check" aria-hidden="true"></i><div style="font-size:12px;font-weight:500">Ethics and Fair Dealing<div style="font-size:10px;color:#534AB7;font-weight:400">Counts toward Core CPD</div></div></div></div>
+        <div class="card"><h3>Recommended modules</h3>${gapMods.length?gapMods.map(g=>`<div class="module-item"><i class="ti ti-book" aria-hidden="true"></i><div><div style="font-size:12px;font-weight:500">${g.mod}</div><div style="font-size:10px;color:var(--color-text-secondary)">${g.label} · score ${g.score.toFixed(1)}/5</div>${g.mod2?`<div style="font-size:10px;color:var(--color-text-tertiary)">Also: ${g.mod2}</div>`:''}</div></div>`).join(''):'<div style="font-size:12px;color:var(--color-text-secondary)">No significant gaps detected.</div>'}</div>
       </div>
     </div>
     <div style="margin-top:8px;text-align:right"><button class="btn btn-p" onclick="showTab('nudge')"><i class="ti ti-mail" aria-hidden="true"></i> Generate email nudge ↗</button></div>`;
@@ -510,15 +589,12 @@ function profileSearch(){
 }
 
 function renderNudge(a){
-  const month=getMonth(),cpd=a.cpdStatus,hasLI=a.licenses.includes('LI'),hasGI=a.licenses.includes('GI');
+  const month=getMonth();
   document.getElementById('n-empty').classList.add('hidden');document.getElementById('n-content').classList.remove('hidden');
   document.getElementById('n-name').textContent=`Email nudge — ${a.name} (${a.code})`;
+  const cpd=a.cpdStatus,hasLI=a.licenses.includes('LI'),hasGI=a.licenses.includes('GI');
   let cpdSection='';
-  if(cpd.gaps.length){
-    cpdSection='\nCPD hours outstanding:\n';
-    cpd.gaps.forEach(g=>{const exp=expectedByNow(g.required,month);const pace=g.done<exp?` (expected pace by ${monthName(month)}: ${exp} hrs)`:'';cpdSection+=`• ${g.type}: ${g.done}/${g.required} hrs completed — ${g.shortfall} hrs outstanding${pace}\n`;});
-    cpdSection+=month>=11?'\nImportant: All CPD hours must be completed by 31 December.':month>=9?'\nWith less than 3 months remaining, please prioritise your outstanding CPD hours urgently.':'\nPlease ensure you are on pace to complete all required hours before 31 December.';
-  }
+  if(cpd.gaps.length){cpdSection='\nCPD hours outstanding:\n';cpd.gaps.forEach(g=>{const exp=expectedByNow(g.required,month);const pace=g.done<exp?` (expected pace by ${monthName(month)}: ${exp} hrs)`:'';cpdSection+=`• ${g.type}: ${g.done}/${g.required} hrs completed — ${g.shortfall} hrs outstanding${pace}\n`;});cpdSection+=month>=11?'\nImportant: All CPD hours must be completed by 31 December.':month>=9?'\nWith less than 3 months remaining, please prioritise your outstanding CPD hours urgently.':'\nPlease ensure you are on pace to complete all required hours before 31 December.';}
   const cmap={ethics:COURSES.ethics,sales:COURSES.sales,product:a.insSub!=null&&(a.invSub==null||a.insSub<a.invSub)?COURSES.product_ins:COURSES.product_inv,wealth:COURSES.wealth};
   const tLines=a.gaps.slice(0,3).length?'\nRecommended e-learning modules:\n'+a.gaps.slice(0,3).map(g=>`• ${g.label}: ${(cmap[g.key]||COURSES.ethics)[0]}`).join('\n'):'';
   document.getElementById('n-body').textContent=`Dear ${a.name.split(' ')[0]},\n\nI hope you are doing well. This message is from the Training & Development Team regarding your professional development requirements.\n\nChannel: ${a.channel}\nLicensed activities: ${a.licenses.join(', ')}\n${cpdSection}${tLines}\n\nMandatory module (all advisors):\n• Ethics & Compliance: Ethics and Fair Dealing (counts toward Core CPD)\n\nAll recommended modules have been pre-assigned to your Cyberquote Academy dashboard. Please log in to complete them at your earliest convenience.\n\nCPD requirements applicable to you:\n• Core CPD (Ethics/Rules & Regs): 6 hrs/year\n• Supplementary CPD: 24 hrs/year${hasLI?'\n• MSL Hours: 2 hrs/year (LI licence holders)':''}${hasGI?'\n• GI Hours: 8 hrs/year (GI licence holders)':''}\n\nIf you have any questions, please contact the Training & Development Team.\n\nWarm regards,\nTraining & Development Team\nPhillip Securities Pte Ltd`;
@@ -527,5 +603,5 @@ function renderNudge(a){
 function copyEmail(){navigator.clipboard.writeText(document.getElementById('n-body').textContent).then(()=>{const b=event.target.closest('button');b.textContent='Copied!';setTimeout(()=>{b.innerHTML='<i class="ti ti-copy" aria-hidden="true"></i> Copy email';},2000);});}
 
 document.getElementById('global-month').value=new Date().getMonth()+1;
-window.addEventListener('load',()=>setTimeout(fetchData,600));
+window.addEventListener('load',()=>setTimeout(fetchSheet,500));
 </script>
