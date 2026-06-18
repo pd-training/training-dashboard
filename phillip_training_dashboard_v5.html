@@ -1,0 +1,803 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.sr-only{position:absolute;left:-9999px}
+.tab-bar{display:flex;gap:2px;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:1.25rem;flex-wrap:wrap}
+.tab{padding:8px 13px;font-size:12px;cursor:pointer;border:none;background:none;color:var(--color-text-secondary);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tab.active{color:var(--color-text-primary);border-bottom-color:#534AB7;font-weight:500}
+.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1.25rem}
+.metric{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 14px}
+.mlabel{font-size:10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.mval{font-size:20px;font-weight:500}
+.mval.r{color:#A32D2D}.mval.a{color:#854F0B}.mval.g{color:#3B6D11}
+.btn{padding:6px 13px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:none;cursor:pointer;font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.btn:hover{background:var(--color-background-secondary)}
+.btn-p{background:#534AB7;color:#fff;border-color:#534AB7}
+.btn-p:hover{background:#3C3489}
+.badge{display:inline-block;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:500}
+.br{background:#FCEBEB;color:#A32D2D}
+.ba{background:#FAEEDA;color:#854F0B}
+.bg{background:#EAF3DE;color:#3B6D11}
+.bp{background:#EEEDFE;color:#3C3489}
+.bt{background:#E1F5EE;color:#0F6E56}
+.ch-PD{background:#E6F1FB;color:#185FA5}
+.ch-PIC{background:#E1F5EE;color:#0F6E56}
+.ch-AM{background:#FBEAF0;color:#993556}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;font-size:10px;font-weight:500;color:var(--color-text-secondary);padding:5px 8px;border-bottom:0.5px solid var(--color-border-tertiary);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+td{padding:7px 8px;border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--color-background-secondary)}
+.bar-wrap{display:flex;align-items:center;gap:6px}
+.bar-track{flex:1;height:4px;background:var(--color-background-secondary);border-radius:3px;overflow:hidden;min-width:50px}
+.bar-fill{height:100%;border-radius:3px}
+.avatar{width:28px;height:28px;border-radius:50%;background:#EEEDFE;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#3C3489;flex-shrink:0}
+.flex{display:flex;align-items:center;gap:8px}
+.tag{font-size:10px;padding:1px 6px;border-radius:10px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary)}
+.lic-tag{font-size:9px;padding:1px 5px;border-radius:10px;font-weight:500}
+.lic-SAS{background:#E6F1FB;color:#185FA5}
+.lic-UT{background:#EEEDFE;color:#3C3489}
+.lic-LI{background:#E1F5EE;color:#0F6E56}
+.lic-GI{background:#FAEEDA;color:#854F0B}
+.lic-MA{background:#FBEAF0;color:#993556}
+.card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:8px}
+.card h3{font-size:10px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.module-item{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);margin-bottom:5px}
+.module-item i{font-size:14px;color:#534AB7;margin-top:1px;flex-shrink:0}
+.mandatory-item{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;background:#EEEDFE;border-radius:var(--border-radius-md);margin-bottom:5px}
+.cpd-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:12px}
+.cpd-row:last-child{border-bottom:none}
+.cpd-bar-wrap{display:flex;align-items:center;gap:6px;min-width:120px}
+.cpd-track{flex:1;height:5px;background:var(--color-background-secondary);border-radius:3px;overflow:hidden}
+.hidden{display:none}
+.empty{text-align:center;padding:2.5rem 1rem;color:var(--color-text-secondary)}
+.empty i{font-size:32px;margin-bottom:10px;display:block;color:var(--color-text-tertiary)}
+.search-row{display:flex;gap:6px;margin-bottom:10px;align-items:center;flex-wrap:wrap}
+.search-row input,.search-row select{padding:6px 10px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:12px;color:var(--color-text-primary)}
+.search-row input{flex:1;min-width:140px}
+.upload-zone{border:1px dashed var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:1.5rem;text-align:center;cursor:pointer;margin-bottom:1rem}
+.upload-zone:hover{background:var(--color-background-secondary)}
+.hint{font-size:11px;color:var(--color-text-tertiary);margin-top:4px}
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dim-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.dim-label{font-size:11px;color:var(--color-text-secondary);width:150px;flex-shrink:0}
+.email-box{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;font-size:12px;line-height:1.8;background:var(--color-background-secondary);white-space:pre-wrap}
+.cpd-alert{padding:8px 10px;border-radius:var(--border-radius-md);font-size:11px;margin-bottom:5px;display:flex;gap:6px;align-items:flex-start}
+.ch-badge{font-size:10px;padding:2px 7px;border-radius:10px;font-weight:500;white-space:nowrap}
+.sub-score-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;padding:6px 8px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)}
+.sub-label{font-size:10px;color:var(--color-text-secondary);width:120px;flex-shrink:0}
+.quiz-ready-note{font-size:10px;color:#534AB7;padding:4px 8px;background:#EEEDFE;border-radius:var(--border-radius-md);margin-top:6px;display:inline-block}
+.cat-icon{width:28px;height:28px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+</style>
+
+<h2 class="sr-only">Phillip Securities Training Gap Dashboard v5 — 4 Category Model</h2>
+
+<div style="padding:.75rem 0">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px">
+  <div>
+    <div style="font-size:16px;font-weight:500">Training Gap Dashboard</div>
+    <div style="font-size:11px;color:var(--color-text-secondary);margin-top:2px">4-category model · CPD tracking · Cyberquote module recommendations</div>
+  </div>
+  <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+    <div style="font-size:11px;color:var(--color-text-secondary)">Data month:</div>
+    <select id="global-month" onchange="if(advisors.length)renderAll()" style="padding:5px 8px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);font-size:12px;color:var(--color-text-primary)">
+      <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option><option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option><option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option><option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
+    </select>
+    <button class="btn" onclick="showTab('upload')"><i class="ti ti-upload" aria-hidden="true"></i> Upload</button>
+    <button class="btn btn-p" onclick="loadDemo()"><i class="ti ti-player-play" aria-hidden="true"></i> Load demo</button>
+  </div>
+</div>
+
+<div class="tab-bar">
+  <button class="tab active" onclick="showTab('overview')" id="tab-overview">Overview</button>
+  <button class="tab" onclick="showTab('advisors')" id="tab-advisors">Advisor list</button>
+  <button class="tab" onclick="showTab('heatmap')" id="tab-heatmap">Gap heatmap</button>
+  <button class="tab" onclick="showTab('profile')" id="tab-profile">Advisor profile</button>
+  <button class="tab" onclick="showTab('nudge')" id="tab-nudge">Email nudge</button>
+  <button class="tab" onclick="showTab('upload')" id="tab-upload">Upload / template</button>
+</div>
+
+<!-- OVERVIEW -->
+<div id="view-overview">
+  <div id="ov-empty" class="empty"><i class="ti ti-chart-bar" aria-hidden="true"></i><div style="font-weight:500;margin-bottom:4px">No data loaded</div><div style="font-size:12px">Click "Load demo" or upload your advisor CSV</div></div>
+  <div id="ov-content" class="hidden">
+    <div class="metric-grid" id="metric-cards"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div class="card">
+        <h3>Gap scores by category — firm average</h3>
+        <div id="cat-summary"></div>
+      </div>
+      <div class="card">
+        <h3>CPD completion status</h3>
+        <div id="cpd-overview"></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+      <div class="card"><h3><span class="ch-badge ch-PD">Partnership Dept</span></h3><div id="ch-pd-stats"></div></div>
+      <div class="card"><h3><span class="ch-badge ch-PIC">Phillip Investor Center</span></h3><div id="ch-pic-stats"></div></div>
+      <div class="card"><h3><span class="ch-badge ch-AM">Affluent Market</span></h3><div id="ch-am-stats"></div></div>
+    </div>
+    <div class="card"><h3>Critical gap alerts — top 8</h3><div id="alert-list"></div></div>
+  </div>
+</div>
+
+<!-- ADVISOR LIST -->
+<div id="view-advisors" class="hidden">
+  <div class="search-row">
+    <input type="text" id="srch" placeholder="Search name, code or email…" oninput="filterAdvisors()">
+    <select id="f-seg" onchange="filterAdvisors()"><option value="">All segments</option><option>New</option><option>Mid</option><option>Experienced</option></select>
+    <select id="f-lic" onchange="filterAdvisors()"><option value="">All licenses</option><option>SAS</option><option>UT</option><option>LI</option><option>GI</option><option>MA</option></select>
+    <select id="f-ch" onchange="filterAdvisors()">
+      <option value="">All channels</option>
+      <option value="Partnership Dept">Partnership Dept</option>
+      <option value="Phillip Investor Center">Phillip Investor Center</option>
+      <option value="Affluent Market">Affluent Market</option>
+    </select>
+    <select id="f-risk" onchange="filterAdvisors()"><option value="">All risk</option><option>Critical</option><option>At risk</option><option>On track</option></select>
+    <select id="f-cpd" onchange="filterAdvisors()"><option value="">All CPD</option><option value="cpd-critical">CPD Critical</option><option value="cpd-atrisk">CPD At risk</option><option value="cpd-ok">CPD On track</option></select>
+  </div>
+  <div id="adv-empty" class="empty"><i class="ti ti-users" aria-hidden="true"></i><div>Load data to see advisors</div></div>
+  <div id="adv-wrap" class="hidden">
+    <table>
+      <thead><tr><th>Advisor</th><th>Code</th><th>Channel</th><th>Licenses</th><th>Segment</th><th>E&C</th><th>Sales</th><th>Product</th><th>Wealth</th><th>Overall</th><th>Risk</th><th>CPD</th><th></th></tr></thead>
+      <tbody id="adv-tbody"></tbody>
+    </table>
+    <div style="font-size:11px;color:var(--color-text-secondary);margin-top:8px" id="adv-count"></div>
+  </div>
+</div>
+
+<!-- HEATMAP -->
+<div id="view-heatmap" class="hidden">
+  <div id="hm-empty" class="empty"><i class="ti ti-layout-grid" aria-hidden="true"></i><div>Load data to see heatmap</div></div>
+  <div id="hm-content" class="hidden">
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:8px">4-category gap scores per advisor. Red = gap, green = strong. Faded = not applicable. Click any row to open profile.</div>
+    <div style="overflow-x:auto" id="hm-wrap"></div>
+    <div style="display:flex;gap:5px;align-items:center;margin-top:10px;font-size:11px;color:var(--color-text-secondary)">
+      <span>Gap →</span>
+      <div style="width:14px;height:9px;background:#F7C1C1;border-radius:2px"></div>
+      <div style="width:14px;height:9px;background:#FAC775;border-radius:2px"></div>
+      <div style="width:14px;height:9px;background:#C0DD97;border-radius:2px"></div>
+      <div style="width:14px;height:9px;background:#639922;border-radius:2px"></div>
+      <span>← Strong</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE -->
+<div id="view-profile" class="hidden">
+  <div class="search-row">
+    <input type="text" id="psrch" placeholder="Search advisor by name or code…" oninput="profileSearch()" style="max-width:320px">
+  </div>
+  <div id="p-results" style="max-height:160px;overflow-y:auto;margin-bottom:10px;display:none;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md)">
+    <div id="p-list"></div>
+  </div>
+  <div id="p-empty" class="empty"><i class="ti ti-user-search" aria-hidden="true"></i><div>Search for an advisor to view their profile</div></div>
+  <div id="p-content" class="hidden"></div>
+</div>
+
+<!-- EMAIL NUDGE -->
+<div id="view-nudge" class="hidden">
+  <div id="n-empty" class="empty"><i class="ti ti-mail" aria-hidden="true"></i><div>Open an advisor profile first, then click "Generate nudge"</div></div>
+  <div id="n-content" class="hidden">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div style="font-size:13px;font-weight:500" id="n-name"></div>
+      <button class="btn btn-p" onclick="copyEmail()"><i class="ti ti-copy" aria-hidden="true"></i> Copy email</button>
+    </div>
+    <div class="email-box" id="n-body"></div>
+  </div>
+</div>
+
+<!-- UPLOAD -->
+<div id="view-upload" class="hidden">
+  <div class="upload-zone" onclick="document.getElementById('csv-in').click()">
+    <i class="ti ti-upload" aria-hidden="true" style="font-size:24px;color:var(--color-text-secondary);margin-bottom:6px;display:block"></i>
+    <div style="font-size:13px;font-weight:500;margin-bottom:4px">Upload advisor CSV</div>
+    <div class="hint">All columns listed in the guide below are required</div>
+    <input type="file" id="csv-in" accept=".csv" style="display:none" onchange="handleUpload(event)">
+  </div>
+  <div style="margin-bottom:1.25rem"><button class="btn" onclick="downloadTemplate()"><i class="ti ti-download" aria-hidden="true"></i> Download CSV template</button></div>
+  <div class="card">
+    <h3>Column guide for product teams</h3>
+    <table style="margin-top:4px">
+      <thead><tr><th>Column</th><th>Format</th><th>Example</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>AdvisorName</td><td>Text</td><td>Jane Tan</td><td></td></tr>
+        <tr><td>AdvisorCode</td><td>Text</td><td>PS1042</td><td>Unique ID</td></tr>
+        <tr><td>Email</td><td>Email</td><td>jane@phillipsec.com.sg</td><td></td></tr>
+        <tr><td>Channel</td><td>Text</td><td>Partnership Dept</td><td>Partnership Dept / Phillip Investor Center / Affluent Market</td></tr>
+        <tr><td>LicensedActivities</td><td>Comma-separated</td><td>LI,UT</td><td>SAS, UT, LI, GI, MA</td></tr>
+        <tr><td>Tenure_Years</td><td>Number</td><td>3.5</td><td></td></tr>
+        <tr><td>Cases_SAS / UT / LI / GI / MA</td><td>Number</td><td>4</td><td>Avg cases/month</td></tr>
+        <tr><td>NTU_Rate</td><td>Decimal 0–1</td><td>0.12</td><td>LI & GI advisors. 12% = 0.12</td></tr>
+        <tr><td>Persistency</td><td>Decimal 0–1</td><td>0.87</td><td>Rolling 12-month. LI & GI advisors</td></tr>
+        <tr><td>CPD_Core_Done</td><td>Number</td><td>4</td><td>Ethics/Rules & Regs hrs. Required: 6</td></tr>
+        <tr><td>CPD_Supp_Done</td><td>Number</td><td>10</td><td>Supplementary hrs. Required: 24</td></tr>
+        <tr><td>CPD_MSL_Done</td><td>Number</td><td>1</td><td>LI only. Required: 2. Enter 0 if N/A</td></tr>
+        <tr><td>CPD_GI_Done</td><td>Number</td><td>5</td><td>GI only. Required: 8. Enter 0 if N/A</td></tr>
+        <tr><td>Data_Month</td><td>Number 1–12</td><td>6</td><td>Month when data was pulled</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:12px;padding:10px;background:#EEEDFE;border-radius:var(--border-radius-md);font-size:11px;line-height:1.8;color:#3C3489">
+      <strong style="display:block;margin-bottom:4px">Quiz-ready columns (add these when Cyberquote data is available)</strong>
+      Quiz_Ethics, Quiz_Sales, Quiz_Product_Insurance, Quiz_Product_Investment, Quiz_Wealth — enter as percentage score 0–100
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+let advisors=[], selectedAdv=null;
+
+const CHANNELS=['Partnership Dept','Phillip Investor Center','Affluent Market'];
+const CH_SHORT={'Partnership Dept':'PD','Phillip Investor Center':'PIC','Affluent Market':'AM'};
+
+// 4 categories
+const CATS=[
+  {key:'ethics', label:'Ethics & Compliance', icon:'ti-shield-check', color:'#534AB7', bg:'#EEEDFE'},
+  {key:'sales',  label:'Sales & Client Engagement', icon:'ti-users', color:'#0F6E56', bg:'#E1F5EE'},
+  {key:'product',label:'Product Knowledge', icon:'ti-building-bank', color:'#185FA5', bg:'#E6F1FB'},
+  {key:'wealth', label:'Wealth Planning & HNW', icon:'ti-diamond', color:'#993556', bg:'#FBEAF0'}
+];
+
+const COURSES={
+  ethics:['Ethics and Fair Dealing','MAS Updates & Circulars 2024','PDPA Refresher','Rules & Regulations Refresher'],
+  sales:['Next Level Selling Techniques','Client Retention Playbook','Financial Storytelling','Prospecting Masterclass'],
+  product_ins:['Insurance Product Deep-Dive','Life Insurance Suitability Module','General Insurance Essentials','Protection Planning Fundamentals'],
+  product_inv:['Funds & ETF Essentials','Structured Products Module','Investment Product Suitability','Unit Trust Advisory Skills'],
+  wealth:['High Net-Worth Advisory Framework','Trusts & Estate Planning','Multi-Generational Wealth Transfer','Complex Case Planning']
+};
+
+const CPD_REQS={core:6,supp:24,msl:2,gi:8};
+
+function getMonth(){return parseInt(document.getElementById('global-month').value)||6;}
+function cpdUrgencyWeight(m){return m<=4?0.3:m<=8?0.6:m<=10?0.85:1.0;}
+function expectedByNow(req,m){return Math.ceil(req*(m/12));}
+function cpdGapScore(done,req,m){
+  const exp=expectedByNow(req,m);
+  if(done>=req) return 5;
+  if(done>=exp) return 4;
+  const r=done/Math.max(exp,1);
+  return r>=0.75?3:r>=0.5?2:1;
+}
+
+function getCpdStatus(a,month){
+  const w=cpdUrgencyWeight(month);
+  const hasLI=a.licenses.includes('LI'), hasGI=a.licenses.includes('GI');
+  const checks=[
+    {type:'Core CPD (Ethics/Rules & Regs)',done:a.cpd.core,required:CPD_REQS.core,score:cpdGapScore(a.cpd.core,CPD_REQS.core,month)},
+    {type:'Supplementary CPD',done:a.cpd.supp,required:CPD_REQS.supp,score:cpdGapScore(a.cpd.supp,CPD_REQS.supp,month)}
+  ];
+  if(hasLI) checks.push({type:'MSL Hours (LI)',done:a.cpd.msl,required:CPD_REQS.msl,score:cpdGapScore(a.cpd.msl,CPD_REQS.msl,month)});
+  if(hasGI) checks.push({type:'GI Hours',done:a.cpd.gi,required:CPD_REQS.gi,score:cpdGapScore(a.cpd.gi,CPD_REQS.gi,month)});
+  const avgScore=checks.reduce((s,c)=>s+c.score,0)/checks.length;
+  const weightedScore=Math.max(1,Math.min(5,avgScore*(0.7+w*0.3)));
+  const gaps=checks.filter(c=>c.done<c.required).map(c=>({...c,shortfall:c.required-c.done,onTrack:c.done>=expectedByNow(c.required,month)}));
+  let cpdRisk='On track';
+  if(gaps.length){const sev=w*(1-(avgScore/5));cpdRisk=sev>=0.6||month>=11?'Critical':month>=9||sev>=0.3?'At risk':'At risk';}
+  return{checks,gaps,avgScore:Math.round(weightedScore*10)/10,cpdRisk};
+}
+
+function getSegment(t){return t<2?'New':t<5?'Mid':'Experienced';}
+
+function prodScore(c){return c>=10?5:c>=6?4:c>=3?3:c>=1?2:0;}
+function ntuScore(n){return n<=0.05?5:n<=0.10?4:n<=0.20?3:n<=0.30?2:1;}
+function persScore(p){return p>=0.90?5:p>=0.80?4:p>=0.70?3:p>=0.60?2:1;}
+
+// ─── SCORING ENGINE ───
+// Designed to accept quiz scores as a future drop-in:
+// quiz object: {ethics, sales, product_ins, product_inv, wealth} as 0–100 or null
+function scoreCategories(a, month, quiz){
+  const lics=a.licenses;
+  const hasLI=lics.includes('LI'), hasGI=lics.includes('GI');
+  const hasSAS=lics.includes('SAS'), hasUT=lics.includes('UT'), hasMA=lics.includes('MA');
+  const hasInsurance=hasLI||hasGI;
+  const hasInvestment=hasSAS||hasUT||hasMA;
+  const hasWealth=hasSAS||hasMA;
+
+  const ntu=ntuScore(a.ntu_rate);
+  const pers=persScore(a.persistency);
+  const cpdScore=a.cpdStatus.avgScore;
+
+  // helper: normalise quiz 0-100 → 1-5
+  function qScore(v){if(v==null||v===0) return null; return Math.max(1,Math.min(5,1+(v/100)*4));}
+
+  // ── 1. Ethics & Compliance ──
+  // Current: CPD Core ×0.6 + CPD Supp ×0.2 + NTU ×0.2
+  // Future:  CPD ×0.4 + Quiz ×0.4 + NTU ×0.2
+  const qEthics=qScore(quiz&&quiz.ethics);
+  let ethics;
+  if(qEthics!=null){
+    ethics=cpdScore*0.4 + qEthics*0.4 + ntu*0.2;
+  } else {
+    const coreS=cpdGapScore(a.cpd.core,CPD_REQS.core,month);
+    const suppS=cpdGapScore(a.cpd.supp,CPD_REQS.supp,month);
+    ethics=coreS*0.6 + suppS*0.2 + ntu*0.2;
+  }
+
+  // ── 2. Sales & Client Engagement ──
+  // Current: Production ×0.4 + NTU ×0.3 + Persistency ×0.3
+  // Future:  Production ×0.3 + NTU ×0.2 + Persistency ×0.2 + Quiz ×0.3
+  const allCases=(a.cases.LI||0)+(a.cases.GI||0)+(a.cases.SAS||0)+(a.cases.UT||0)+(a.cases.MA||0);
+  const activeLics=lics.filter(l=>a.cases[l]>0);
+  const avgProd=activeLics.length?activeLics.reduce((s,l)=>s+prodScore(a.cases[l]||0),0)/activeLics.length:0;
+  const qSales=qScore(quiz&&quiz.sales);
+  let sales;
+  if(qSales!=null){
+    sales=avgProd*0.3 + ntu*0.2 + pers*0.2 + qSales*0.3;
+  } else {
+    sales=avgProd*0.4 + ntu*0.3 + pers*0.3;
+  }
+
+  // ── 3. Product Knowledge — Insurance & Investment sub-scores ──
+  // Insurance sub: LI/GI production × 0.7 + NTU × 0.3
+  // Investment sub: SAS/UT/MA production × 0.7 + Persistency × 0.3
+  // Future: each sub adds Quiz × 0.35 weight
+  let insSub=null, invSub=null;
+
+  if(hasInsurance){
+    const insActive=(['LI','GI']).filter(l=>lics.includes(l)&&(a.cases[l]||0)>0);
+    const insProd=insActive.length?insActive.reduce((s,l)=>s+prodScore(a.cases[l]||0),0)/insActive.length:(lics.filter(l=>['LI','GI'].includes(l)).length>0?1:0);
+    const qIns=qScore(quiz&&quiz.product_ins);
+    if(qIns!=null){
+      insSub=insProd*0.45 + ntu*0.2 + qIns*0.35;
+    } else {
+      insSub=insProd*0.7 + ntu*0.3;
+    }
+  }
+
+  if(hasInvestment){
+    const invActive=(['SAS','UT','MA']).filter(l=>lics.includes(l)&&(a.cases[l]||0)>0);
+    const invProd=invActive.length?invActive.reduce((s,l)=>s+prodScore(a.cases[l]||0),0)/invActive.length:(lics.filter(l=>['SAS','UT','MA'].includes(l)).length>0?1:0);
+    const qInv=qScore(quiz&&quiz.product_inv);
+    if(qInv!=null){
+      invSub=invProd*0.45 + pers*0.2 + qInv*0.35;
+    } else {
+      invSub=invProd*0.7 + pers*0.3;
+    }
+  }
+
+  let product=null;
+  if(insSub!=null&&invSub!=null) product=(insSub+invSub)/2;
+  else if(insSub!=null) product=insSub;
+  else if(invSub!=null) product=invSub;
+
+  // ── 4. Wealth Planning & HNW ──
+  // Only unlocked for SAS or MA holders
+  // Current: MA/SAS production ×0.5 + Persistency ×0.3 + NTU ×0.2
+  // Future:  Production ×0.35 + Persistency ×0.2 + NTU ×0.1 + Quiz ×0.35
+  let wealth=null;
+  if(hasWealth){
+    const wActive=(['SAS','MA']).filter(l=>lics.includes(l)&&(a.cases[l]||0)>0);
+    const wProd=wActive.length?wActive.reduce((s,l)=>s+prodScore(a.cases[l]||0),0)/wActive.length:(lics.filter(l=>['SAS','MA'].includes(l)).length>0?1:0);
+    const qWealth=qScore(quiz&&quiz.wealth);
+    if(qWealth!=null){
+      wealth=wProd*0.35 + pers*0.2 + ntu*0.1 + qWealth*0.35;
+    } else {
+      wealth=wProd*0.5 + pers*0.3 + ntu*0.2;
+    }
+  }
+
+  // ── Segment weighting ──
+  const seg=a.seg;
+  const segW=seg==='New'?{ethics:1.35,sales:1.0,product:1.25,wealth:0.7}:
+             seg==='Mid'?{ethics:1.1,sales:1.25,product:1.1,wealth:1.0}:
+                         {ethics:1.0,sales:1.0,product:1.0,wealth:1.2};
+
+  function clamp(v){return v==null?null:Math.min(5,Math.max(1,Math.round(v*10)/10));}
+
+  const scores={
+    ethics:clamp(ethics*segW.ethics),
+    sales:clamp(sales*segW.sales),
+    product:product!=null?clamp(product*segW.product):null,
+    wealth:wealth!=null?clamp(wealth*segW.wealth):null,
+    insSub:insSub!=null?clamp(insSub):null,
+    invSub:invSub!=null?clamp(invSub):null
+  };
+
+  // Overall = average of applicable (non-null) categories
+  const applicable=[scores.ethics,scores.sales,scores.product,scores.wealth].filter(v=>v!=null);
+  const overall=Math.round(applicable.reduce((s,v)=>s+v,0)/applicable.length*10)/10;
+
+  return{scores,overall,insSub:scores.insSub,invSub:scores.invSub,hasInsurance,hasInvestment,hasWealth};
+}
+
+function processAdvisor(a,month){
+  const seg=getSegment(a.tenure);
+  const cpdStatus=getCpdStatus({...a},month);
+  const enriched={...a,seg,cpdStatus};
+  const {scores,overall,insSub,invSub,hasInsurance,hasInvestment,hasWealth}=scoreCategories(enriched,month,a.quiz||null);
+
+  let risk=overall<2.5?'Critical':overall<3.5?'At risk':'On track';
+  if(cpdStatus.cpdRisk==='Critical'&&risk==='On track') risk='At risk';
+  if(cpdStatus.cpdRisk==='Critical'&&risk==='At risk') risk='Critical';
+  if(cpdStatus.cpdRisk==='At risk'&&risk==='On track') risk='At risk';
+
+  const gaps=CATS
+    .filter(c=>scores[c.key]!=null)
+    .map(c=>({key:c.key,label:c.label,score:scores[c.key]}))
+    .filter(g=>g.score<3.5)
+    .sort((a,b)=>a.score-b.score);
+
+  return{...enriched,scores,overall,risk,gaps,insSub,invSub,hasInsurance,hasInvestment,hasWealth};
+}
+
+function riskBadge(r){const c=r==='Critical'?'br':r==='At risk'?'ba':'bg';return`<span class="badge ${c}">${r}</span>`;}
+function cpdBadge(r){const c=r==='Critical'?'br':r==='At risk'?'ba':'bg';return`<span class="badge ${c}">CPD: ${r}</span>`;}
+function chBadge(ch){const k=CH_SHORT[ch]||'PD';return`<span class="ch-badge ch-${k}">${ch}</span>`;}
+function barFill(s,mini){if(s==null) return`<span style="font-size:10px;color:var(--color-text-tertiary)">N/A</span>`;const p=Math.round((s/5)*100);const c=s<2.5?'#E24B4A':s<3.5?'#EF9F27':'#639922';return`<div class="bar-wrap"><div class="bar-track" style="min-width:${mini?'35px':'50px'}"><div class="bar-fill" style="width:${p}%;background:${c}"></div></div><span style="font-size:11px;color:var(--color-text-secondary);min-width:20px">${s.toFixed(1)}</span></div>`;}
+function cpdBar(done,req){const p=Math.min(100,Math.round((done/req)*100));const c=p>=100?'#639922':p>=60?'#EF9F27':'#E24B4A';return`<div class="cpd-bar-wrap"><div class="cpd-track"><div class="bar-fill" style="width:${p}%;background:${c}"></div></div><span style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">${done}/${req} hrs</span></div>`;}
+function licTags(lics){return lics.map(l=>`<span class="lic-tag lic-${l}">${l}</span>`).join(' ');}
+function initials(n){return n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();}
+function monthName(m){return['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m-1]||'';}
+
+function showTab(t){
+  ['overview','advisors','heatmap','profile','nudge','upload'].forEach(id=>{
+    document.getElementById('view-'+id).classList.add('hidden');
+    document.getElementById('tab-'+id).classList.remove('active');
+  });
+  document.getElementById('view-'+t).classList.remove('hidden');
+  document.getElementById('tab-'+t).classList.add('active');
+}
+
+function loadDemo(){
+  const names=['Aisyah Binte Rahman','Benjamin Tan Wei Ming','Chen Jia Wei','Diana Lim Xiu Ying','Ethan Ng Jun Hao','Farah Binte Ismail','Gerald Chua Kian Hock','Hannah Low Mei Ling','Ivan Koh Boon Heng','Jasmine Wong Siu Ping','Kelvin Lee Chee Wai','Linda Goh Ah Lian','Marcus Teo Boon Kiat','Nadia Sim Li Fen','Oscar Peh Teck Seng','Priya d/o Nair','Quentin Yeo Zhong Wei','Rachel Ong Hui Ting','Samuel Ho Weng Kit','Tina Chew Lay Hoon','Umar Bin Syed','Vivian Yap Siew Bee','Wesley Chan Yong Kiat','Xenia Tan Hui Min','Yusuf Bin Ali','Zoe Lim Pei Shan'];
+  const licSets=[['LI'],['LI','UT'],['LI','UT','SAS'],['UT','SAS'],['LI','GI'],['LI','UT','MA'],['SAS','MA'],['GI','LI'],['UT'],['LI','UT','SAS','MA'],['GI'],['MA','SAS']];
+  const month=getMonth();
+  const raw=[];
+  for(let i=0;i<800;i++){
+    const name=names[i%names.length]+(i>=names.length?' '+(Math.floor(i/names.length)+1):'');
+    const lics=licSets[i%licSets.length];
+    const ch=CHANNELS[i%CHANNELS.length];
+    const tenure=parseFloat((Math.random()*16).toFixed(1));
+    const cases={};
+    ['SAS','UT','LI','GI','MA'].forEach(l=>{cases[l]=lics.includes(l)?Math.floor(Math.random()*10):0;});
+    const maxCore=Math.ceil(6*(month/12)*1.4), maxSupp=Math.ceil(24*(month/12)*1.4);
+    raw.push({
+      name,code:'PS'+String(1000+i),
+      email:name.split(' ')[0].toLowerCase()+'.'+name.split(' ').pop().toLowerCase()+i+'@phillipsec.com.sg',
+      channel:ch,licenses:lics,tenure,cases,
+      ntu_rate:parseFloat((Math.random()*0.35).toFixed(2)),
+      persistency:parseFloat((0.55+Math.random()*0.45).toFixed(2)),
+      cpd:{core:Math.floor(Math.random()*maxCore),supp:Math.floor(Math.random()*maxSupp),msl:lics.includes('LI')?Math.floor(Math.random()*3):0,gi:lics.includes('GI')?Math.floor(Math.random()*10):0},
+      quiz:null // no quiz data yet
+    });
+  }
+  advisors=raw.map(a=>processAdvisor(a,month));
+  renderAll();showTab('overview');
+}
+
+function renderAll(){
+  const month=getMonth();
+  if(advisors.length) advisors=advisors.map(a=>processAdvisor(a,month));
+  renderOverview(month);renderAdvisorTable(advisors);renderHeatmap();
+}
+
+function channelStats(ch){
+  const pool=advisors.filter(a=>a.channel===ch);
+  if(!pool.length) return'<div style="font-size:11px;color:var(--color-text-secondary)">No advisors</div>';
+  const crit=pool.filter(a=>a.risk==='Critical').length;
+  const avg=Math.round(pool.reduce((s,a)=>s+a.overall,0)/pool.length*10)/10;
+  const cpdCrit=pool.filter(a=>a.cpdStatus.cpdRisk==='Critical').length;
+  return`<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px"><div style="font-size:9px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px">Advisors</div><div style="font-size:16px;font-weight:500">${pool.length}</div></div>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px"><div style="font-size:9px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px">Avg score</div><div style="font-size:16px;font-weight:500;color:${avg<2.5?'#A32D2D':avg<3.5?'#854F0B':'#3B6D11'}">${avg}</div></div>
+  </div>
+  <div style="font-size:11px;display:flex;flex-direction:column;gap:3px">
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">Critical</span><span class="badge br">${crit}</span></div>
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--color-text-secondary)">CPD critical</span><span class="badge br">${cpdCrit}</span></div>
+  </div>`;
+}
+
+function renderOverview(month){
+  document.getElementById('ov-empty').classList.add('hidden');
+  document.getElementById('ov-content').classList.remove('hidden');
+  const crit=advisors.filter(a=>a.risk==='Critical').length;
+  const atr=advisors.filter(a=>a.risk==='At risk').length;
+  const avg=Math.round(advisors.reduce((s,a)=>s+a.overall,0)/advisors.length*10)/10;
+  const cpdCrit=advisors.filter(a=>a.cpdStatus.cpdRisk==='Critical').length;
+  document.getElementById('metric-cards').innerHTML=`
+    <div class="metric"><div class="mlabel">Total advisors</div><div class="mval">${advisors.length}</div></div>
+    <div class="metric"><div class="mlabel">Overall critical</div><div class="mval r">${crit}</div></div>
+    <div class="metric"><div class="mlabel">At risk</div><div class="mval a">${atr}</div></div>
+    <div class="metric"><div class="mlabel">Avg score</div><div class="mval ${avg<2.5?'r':avg<3.5?'a':'g'}">${avg}/5</div></div>`;
+
+  // Category summary with icons
+  document.getElementById('cat-summary').innerHTML=CATS.map(c=>{
+    const catAdvisors=advisors.filter(a=>a.scores[c.key]!=null);
+    if(!catAdvisors.length) return'';
+    const cavg=Math.round(catAdvisors.reduce((s,a)=>s+(a.scores[c.key]||0),0)/catAdvisors.length*10)/10;
+    return`<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div class="cat-icon" style="background:${c.bg}"><i class="ti ${c.icon}" aria-hidden="true" style="color:${c.color};font-size:14px"></i></div>
+      <div style="flex:1"><div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px"><span>${c.label}</span><span style="color:var(--color-text-secondary)">${cavg}/5</span></div>${barFill(cavg)}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('ch-pd-stats').innerHTML=channelStats('Partnership Dept');
+  document.getElementById('ch-pic-stats').innerHTML=channelStats('Phillip Investor Center');
+  document.getElementById('ch-am-stats').innerHTML=channelStats('Affluent Market');
+
+  const w=cpdUrgencyWeight(month);
+  const urgLabel=month<=4?'Low urgency':month<=8?'Moderate urgency':month<=10?'High urgency':'Critical — year end';
+  const urgCol=month<=4?'#3B6D11':month<=8?'#854F0B':'#A32D2D';
+  const urgBg=month<=4?'#EAF3DE':month<=8?'#FAEEDA':'#FCEBEB';
+  const cpdTypes=[{label:'Core CPD (6 hrs)',key:'core',req:6,all:true},{label:'Supplementary CPD (24 hrs)',key:'supp',req:24,all:true},{label:'MSL Hours (2 hrs)',key:'msl',req:2,lic:'LI'},{label:'GI Hours (8 hrs)',key:'gi',req:8,lic:'GI'}];
+  let cpdHtml=`<div style="padding:6px 10px;background:${urgBg};border-radius:var(--border-radius-md);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:11px;color:${urgCol};font-weight:500">${monthName(month)} — ${urgLabel}</span><span style="font-size:10px;color:${urgCol}">Weight: ${Math.round(w*100)}%</span></div>`;
+  cpdTypes.forEach(ct=>{
+    const pool=ct.all?advisors:advisors.filter(a=>a.licenses.includes(ct.lic));
+    if(!pool.length) return;
+    const gap=pool.filter(a=>a.cpd[ct.key]<ct.req).length;
+    const pct=Math.round((gap/pool.length)*100);
+    cpdHtml+=`<div class="cpd-row"><span style="color:var(--color-text-secondary)">${ct.label}</span><div style="display:flex;align-items:center;gap:8px"><div style="width:80px;height:4px;background:var(--color-background-secondary);border-radius:3px;overflow:hidden"><div style="width:${pct}%;height:100%;background:${pct>50?'#E24B4A':pct>25?'#EF9F27':'#639922'}"></div></div><span style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap">${gap}/${pool.length} behind</span></div></div>`;
+  });
+  document.getElementById('cpd-overview').innerHTML=cpdHtml;
+
+  const alerts=advisors.filter(a=>a.risk==='Critical').slice(0,8);
+  document.getElementById('alert-list').innerHTML=alerts.length?alerts.map(a=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary);flex-wrap:wrap;gap:4px">
+      <div class="flex"><div class="avatar">${initials(a.name)}</div><div><div style="font-size:12px;font-weight:500">${a.name}</div><div style="font-size:10px;color:var(--color-text-secondary);margin-top:2px">${a.code} · ${chBadge(a.channel)} · ${a.seg} · ${licTags(a.licenses)}</div></div></div>
+      <div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap">${riskBadge(a.risk)}${cpdBadge(a.cpdStatus.cpdRisk)}<button class="btn" style="font-size:11px;padding:3px 8px" onclick="openProfile('${a.code}')">Profile ↗</button></div>
+    </div>`).join(''):'<div style="font-size:12px;color:var(--color-text-secondary)">No critical gaps.</div>';
+}
+
+function renderAdvisorTable(data){
+  if(!data.length){document.getElementById('adv-empty').classList.remove('hidden');document.getElementById('adv-wrap').classList.add('hidden');return;}
+  document.getElementById('adv-empty').classList.add('hidden');document.getElementById('adv-wrap').classList.remove('hidden');
+  const shown=data.slice(0,60);
+  document.getElementById('adv-count').textContent=`Showing ${shown.length} of ${data.length} advisors`;
+  document.getElementById('adv-tbody').innerHTML=shown.map(a=>`<tr>
+    <td><div class="flex"><div class="avatar">${initials(a.name)}</div><div><div style="font-weight:500">${a.name}</div><div style="font-size:10px;color:var(--color-text-secondary)">${a.email}</div></div></div></td>
+    <td style="font-size:11px">${a.code}</td>
+    <td>${chBadge(a.channel)}</td>
+    <td><div style="display:flex;gap:2px;flex-wrap:wrap">${licTags(a.licenses)}</div></td>
+    <td><span class="badge bp">${a.seg}</span></td>
+    <td>${barFill(a.scores.ethics,true)}</td>
+    <td>${barFill(a.scores.sales,true)}</td>
+    <td>${barFill(a.scores.product,true)}</td>
+    <td>${barFill(a.scores.wealth,true)}</td>
+    <td>${barFill(a.overall,true)}</td>
+    <td>${riskBadge(a.risk)}</td>
+    <td>${cpdBadge(a.cpdStatus.cpdRisk)}</td>
+    <td><button class="btn" style="font-size:11px;padding:3px 8px" onclick="openProfile('${a.code}')">Profile ↗</button></td>
+  </tr>`).join('');
+}
+
+function filterAdvisors(){
+  const q=document.getElementById('srch').value.toLowerCase();
+  const seg=document.getElementById('f-seg').value;
+  const lic=document.getElementById('f-lic').value;
+  const ch=document.getElementById('f-ch').value;
+  const risk=document.getElementById('f-risk').value;
+  const cpdf=document.getElementById('f-cpd').value;
+  const f=advisors.filter(a=>{
+    const mq=!q||(a.name.toLowerCase().includes(q)||a.code.toLowerCase().includes(q)||a.email.toLowerCase().includes(q));
+    return mq&&(!seg||a.seg===seg)&&(!lic||a.licenses.includes(lic))&&(!ch||a.channel===ch)&&(!risk||a.risk===risk)&&(!cpdf||(cpdf==='cpd-critical'&&a.cpdStatus.cpdRisk==='Critical')||(cpdf==='cpd-atrisk'&&a.cpdStatus.cpdRisk==='At risk')||(cpdf==='cpd-ok'&&a.cpdStatus.cpdRisk==='On track'));
+  });
+  renderAdvisorTable(f);
+}
+
+function renderHeatmap(){
+  document.getElementById('hm-empty').classList.add('hidden');document.getElementById('hm-content').classList.remove('hidden');
+  const sample=advisors.slice(0,40);
+  const cols=['E&C','Sales','Product','Wealth','CPD'];
+  let html=`<table style="border-collapse:separate;border-spacing:2px;font-size:10px"><tr><th style="min-width:90px;text-align:right;padding-right:6px;font-size:9px"></th>`;
+  cols.forEach(c=>{html+=`<th style="font-size:9px;color:var(--color-text-secondary);padding:1px 5px;text-align:center;white-space:nowrap">${c}</th>`;});
+  html+=`</tr>`;
+  sample.forEach(a=>{
+    html+=`<tr style="cursor:pointer" onclick="openProfile('${a.code}')"><td style="text-align:right;padding-right:6px;font-size:10px;color:var(--color-text-secondary);white-space:nowrap">${a.name.split(' ')[0]} ${(a.name.split(' ')[1]||'')[0]||''}.</td>`;
+    ['ethics','sales','product','wealth'].forEach(k=>{
+      const s=a.scores[k];
+      if(s==null){html+=`<td style="width:22px;height:18px;min-width:22px;background:var(--color-background-secondary);border-radius:2px;opacity:.2"></td>`;return;}
+      const p=s/5;const r=Math.round(247-(247-99)*p);const g=Math.round(107+(152-107)*p);const b=Math.round(74+(34-74)*p);
+      html+=`<td title="${k}: ${s}" style="width:22px;height:18px;min-width:22px;background:rgb(${r},${g},${b});border-radius:2px"></td>`;
+    });
+    const cs=a.cpdStatus.avgScore;const cp=cs/5;
+    const cr=Math.round(247-(247-99)*cp);const cg=Math.round(107+(152-107)*cp);const cb=Math.round(74+(34-74)*cp);
+    html+=`<td title="CPD: ${cs}" style="width:22px;height:18px;min-width:22px;background:rgb(${cr},${cg},${cb});border-radius:2px"></td></tr>`;
+  });
+  html+=`</table>`;
+  document.getElementById('hm-wrap').innerHTML=html;
+}
+
+function openProfile(code){
+  selectedAdv=advisors.find(a=>a.code===code);
+  if(!selectedAdv) return;
+  renderProfile(selectedAdv);renderNudge(selectedAdv);showTab('profile');
+}
+
+function renderProfile(a){
+  const month=getMonth();
+  document.getElementById('p-empty').classList.add('hidden');document.getElementById('p-content').classList.remove('hidden');
+  const cpd=a.cpdStatus;
+  const hasLI=a.licenses.includes('LI'),hasGI=a.licenses.includes('GI');
+  const quizReady=a.quiz&&Object.values(a.quiz).some(v=>v>0);
+
+  let cpdRows=`<div class="cpd-row"><span>Core CPD (Ethics/Rules & Regs)</span>${cpdBar(a.cpd.core,6)}</div>
+    <div class="cpd-row"><span>Supplementary CPD</span>${cpdBar(a.cpd.supp,24)}</div>`;
+  if(hasLI) cpdRows+=`<div class="cpd-row"><span>MSL Hours (LI)</span>${cpdBar(a.cpd.msl,2)}</div>`;
+  if(hasGI) cpdRows+=`<div class="cpd-row"><span>GI Hours</span>${cpdBar(a.cpd.gi,8)}</div>`;
+
+  const gapAlerts=cpd.gaps.map(g=>{
+    const urgCol=g.onTrack?'#854F0B':'#A32D2D';const urgBg=g.onTrack?'#FAEEDA':'#FCEBEB';
+    return`<div class="cpd-alert" style="background:${urgBg}"><i class="ti ti-alert-triangle" aria-hidden="true" style="font-size:13px;color:${urgCol};flex-shrink:0"></i><span style="color:${urgCol}">${g.type}: missing <strong>${g.shortfall} hrs</strong> as of ${monthName(month)}</span></div>`;
+  }).join('');
+
+  // Build recommended modules from gaps
+  const gapModules=a.gaps.slice(0,3).map(g=>{
+    let mods=[];
+    if(g.key==='ethics') mods=COURSES.ethics;
+    else if(g.key==='sales') mods=COURSES.sales;
+    else if(g.key==='product'){
+      if(a.insSub!=null&&(a.invSub==null||a.insSub<a.invSub)) mods=COURSES.product_ins;
+      else if(a.invSub!=null) mods=COURSES.product_inv;
+      else mods=COURSES.product_ins;
+    }
+    else if(g.key==='wealth') mods=COURSES.wealth;
+    return{...g,mod:mods[0],mod2:mods[1]};
+  });
+
+  document.getElementById('p-content').innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px">
+      <div class="flex">
+        <div class="avatar" style="width:40px;height:40px;font-size:13px">${initials(a.name)}</div>
+        <div>
+          <div style="font-size:15px;font-weight:500">${a.name}</div>
+          <div style="font-size:11px;color:var(--color-text-secondary)">${a.code} · ${a.email}</div>
+          <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;align-items:center">${chBadge(a.channel)}<span class="badge bp">${a.seg} · ${a.tenure}y</span>${licTags(a.licenses)}</div>
+        </div>
+      </div>
+      <div style="text-align:right;display:flex;flex-direction:column;gap:4px;align-items:flex-end">${riskBadge(a.risk)}${cpdBadge(cpd.cpdRisk)}<div style="font-size:18px;font-weight:500">${a.overall}<span style="font-size:11px;color:var(--color-text-secondary)">/5</span></div></div>
+    </div>
+    <div class="profile-grid">
+      <div>
+        <div class="card">
+          <h3>Gap scores — 4 categories</h3>
+          ${CATS.map(c=>{
+            const s=a.scores[c.key];
+            const applicable=s!=null;
+            return`<div class="dim-row">
+              <div style="display:flex;align-items:center;gap:6px;width:160px;flex-shrink:0">
+                <div class="cat-icon" style="background:${applicable?c.bg:'var(--color-background-secondary)'};width:22px;height:22px"><i class="ti ${c.icon}" aria-hidden="true" style="color:${applicable?c.color:'var(--color-text-tertiary)'};font-size:12px"></i></div>
+                <span class="dim-label" style="width:auto;${!applicable?'opacity:.4':''}">${c.label}</span>
+              </div>
+              ${applicable?barFill(s):'<span style="font-size:10px;color:var(--color-text-tertiary)">Not applicable</span>'}
+            </div>
+            ${c.key==='product'&&applicable?`
+              <div style="margin-left:28px;margin-bottom:4px">
+                ${a.insSub!=null?`<div class="sub-score-row"><span class="sub-label"><i class="ti ti-shield" aria-hidden="true" style="font-size:11px;margin-right:4px"></i>Insurance sub-score</span>${barFill(a.insSub,true)}</div>`:''}
+                ${a.invSub!=null?`<div class="sub-score-row"><span class="sub-label"><i class="ti ti-trending-up" aria-hidden="true" style="font-size:11px;margin-right:4px"></i>Investment sub-score</span>${barFill(a.invSub,true)}</div>`:''}
+              </div>`:''}`;
+          }).join('')}
+          ${!quizReady?`<div class="quiz-ready-note"><i class="ti ti-info-circle" aria-hidden="true" style="font-size:11px;margin-right:4px"></i>Scoring based on production data. Quiz data can be added to improve accuracy.</div>`:''}
+        </div>
+        <div class="card">
+          <h3>Production snapshot</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;font-size:11px">
+            ${['SAS','UT','LI','GI','MA'].map(l=>`<div style="${!a.licenses.includes(l)?'opacity:.3':''}"><span style="color:var(--color-text-secondary)">${l}:</span> <strong>${a.cases[l]||0} cases/mo</strong></div>`).join('')}
+            <div><span style="color:var(--color-text-secondary)">NTU rate:</span> <strong>${Math.round(a.ntu_rate*100)}%</strong></div>
+            <div><span style="color:var(--color-text-secondary)">Persistency:</span> <strong>${Math.round(a.persistency*100)}%</strong></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <h3>CPD hours — ${monthName(month)} status</h3>
+          ${gapAlerts||'<div style="padding:6px 10px;background:#EAF3DE;border-radius:var(--border-radius-md);font-size:11px;color:#3B6D11;margin-bottom:8px"><i class="ti ti-circle-check" aria-hidden="true"></i> All CPD on track</div>'}
+          ${cpdRows}
+        </div>
+        <div class="card">
+          <h3>Mandatory for all advisors</h3>
+          <div class="mandatory-item"><i class="ti ti-shield-check" aria-hidden="true"></i><div style="font-size:12px;font-weight:500">Ethics and Fair Dealing<div style="font-size:10px;color:#534AB7;font-weight:400">Counts toward Core CPD</div></div></div>
+        </div>
+        <div class="card">
+          <h3>Recommended modules</h3>
+          ${gapModules.length?gapModules.map(g=>`<div class="module-item"><i class="ti ti-book" aria-hidden="true"></i><div><div style="font-size:12px;font-weight:500">${g.mod}</div><div style="font-size:10px;color:var(--color-text-secondary)">${g.label} · score ${g.score.toFixed(1)}/5</div>${g.mod2?`<div style="font-size:10px;color:var(--color-text-tertiary)">Also: ${g.mod2}</div>`:''}</div></div>`).join(''):'<div style="font-size:12px;color:var(--color-text-secondary)">No significant gaps detected.</div>'}
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:8px;text-align:right"><button class="btn btn-p" onclick="showTab('nudge')"><i class="ti ti-mail" aria-hidden="true"></i> Generate email nudge ↗</button></div>`;
+}
+
+function profileSearch(){
+  const q=document.getElementById('psrch').value.toLowerCase();
+  const wr=document.getElementById('p-results');
+  if(!q||!advisors.length){wr.style.display='none';return;}
+  const res=advisors.filter(a=>a.name.toLowerCase().includes(q)||a.code.toLowerCase().includes(q)).slice(0,6);
+  if(!res.length){wr.style.display='none';return;}
+  wr.style.display='block';
+  document.getElementById('p-list').innerHTML=res.map(a=>`
+    <div onclick="openProfile('${a.code}')" style="padding:7px 10px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid var(--color-border-tertiary)" onmouseover="this.style.background='var(--color-background-secondary)'" onmouseout="this.style.background=''">
+      <div class="flex"><div class="avatar">${initials(a.name)}</div><div><div style="font-size:12px;font-weight:500">${a.name}</div><div style="font-size:10px;color:var(--color-text-secondary)">${a.code} · ${a.channel}</div></div></div>
+      <div style="display:flex;gap:4px">${riskBadge(a.risk)}${cpdBadge(a.cpdStatus.cpdRisk)}</div>
+    </div>`).join('');
+}
+
+function renderNudge(a){
+  const month=getMonth();
+  document.getElementById('n-empty').classList.add('hidden');document.getElementById('n-content').classList.remove('hidden');
+  document.getElementById('n-name').textContent=`Email nudge — ${a.name} (${a.code})`;
+  const cpd=a.cpdStatus;
+  const hasLI=a.licenses.includes('LI'),hasGI=a.licenses.includes('GI');
+  let cpdSection='';
+  if(cpd.gaps.length){
+    cpdSection='\nCPD hours outstanding:\n';
+    cpd.gaps.forEach(g=>{
+      const expected=expectedByNow(g.required,month);
+      const pace=g.done<expected?` (expected pace by ${monthName(month)}: ${expected} hrs)`:'';
+      cpdSection+=`• ${g.type}: ${g.done}/${g.required} hrs completed — ${g.shortfall} hrs outstanding${pace}\n`;
+    });
+    cpdSection+=month>=11?'\nImportant: We are approaching year end. All CPD hours must be completed by 31 December.':month>=9?'\nWith less than 3 months remaining, please prioritise completing your outstanding CPD hours urgently.':'\nPlease ensure you are on pace to complete all required hours before 31 December.';
+  }
+  const gaps=a.gaps.slice(0,3);
+  const courseMap={ethics:COURSES.ethics,sales:COURSES.sales,product:a.insSub!=null&&(a.invSub==null||a.insSub<a.invSub)?COURSES.product_ins:COURSES.product_inv,wealth:COURSES.wealth};
+  const trainingLines=gaps.length?'\nRecommended e-learning modules based on your profile:\n'+gaps.map(g=>`• ${g.label}: ${(courseMap[g.key]||COURSES.ethics)[0]}`).join('\n'):'';
+  document.getElementById('n-body').textContent=`Dear ${a.name.split(' ')[0]},
+
+I hope you are doing well. This message is from the Training & Development Team regarding your professional development requirements.
+
+Channel: ${a.channel}
+Licensed activities: ${a.licenses.join(', ')}
+${cpdSection}${trainingLines}
+
+Mandatory module (all advisors):
+• Ethics & Compliance: Ethics and Fair Dealing (counts toward Core CPD)
+
+All recommended modules have been pre-assigned to your Cyberquote Academy dashboard. Please log in to complete them at your earliest convenience.
+
+CPD requirements applicable to you:
+• Core CPD (Ethics/Rules & Regs): 6 hrs/year
+• Supplementary CPD: 24 hrs/year${hasLI?'\n• MSL Hours: 2 hrs/year (LI licence holders)':''}${hasGI?'\n• GI Hours: 8 hrs/year (GI licence holders)':''}
+
+If you have any questions, please contact the Training & Development Team.
+
+Warm regards,
+Training & Development Team
+Phillip Securities Pte Ltd`;
+}
+
+function copyEmail(){
+  navigator.clipboard.writeText(document.getElementById('n-body').textContent).then(()=>{
+    const b=event.target.closest('button');b.textContent='Copied!';
+    setTimeout(()=>{b.innerHTML='<i class="ti ti-copy" aria-hidden="true"></i> Copy email';},2000);
+  });
+}
+
+function downloadTemplate(){
+  const h='AdvisorName,AdvisorCode,Email,Channel,LicensedActivities,Tenure_Years,Cases_SAS,Cases_UT,Cases_LI,Cases_GI,Cases_MA,NTU_Rate,Persistency,CPD_Core_Done,CPD_Supp_Done,CPD_MSL_Done,CPD_GI_Done,Data_Month';
+  const s='Jane Tan Mei Ling,PS1001,jane.tan@phillipsec.com.sg,Partnership Dept,"LI,UT",3.5,0,2,5,0,0,0.08,0.85,4,10,1,0,6';
+  const blob=new Blob([h+'\n'+s],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const el=document.createElement('a');el.href=url;el.download='advisor_gap_template_v5.csv';el.click();
+}
+
+function handleUpload(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    const lines=ev.target.result.split('\n').filter(l=>l.trim());
+    const headers=lines[0].split(',').map(h=>h.trim().replace(/"/g,''));
+    const month=getMonth();
+    const raw=lines.slice(1).map(line=>{
+      const vals=[];let cur='',inQ=false;
+      for(const c of line){if(c==='"'){inQ=!inQ;}else if(c===','&&!inQ){vals.push(cur.trim());cur='';}else{cur+=c;}}
+      vals.push(cur.trim());
+      const obj={};headers.forEach((h,i)=>obj[h]=(vals[i]||'').replace(/"/g,''));
+      const lics=obj.LicensedActivities?obj.LicensedActivities.split(',').map(l=>l.trim()).filter(Boolean):[];
+      return{
+        name:obj.AdvisorName||'',code:obj.AdvisorCode||'',email:obj.Email||'',
+        channel:obj.Channel||'',licenses:lics,tenure:parseFloat(obj.Tenure_Years)||0,
+        cases:{SAS:parseFloat(obj.Cases_SAS)||0,UT:parseFloat(obj.Cases_UT)||0,LI:parseFloat(obj.Cases_LI)||0,GI:parseFloat(obj.Cases_GI)||0,MA:parseFloat(obj.Cases_MA)||0},
+        ntu_rate:parseFloat(obj.NTU_Rate)||0,persistency:parseFloat(obj.Persistency)||0.8,
+        cpd:{core:parseFloat(obj.CPD_Core_Done)||0,supp:parseFloat(obj.CPD_Supp_Done)||0,msl:parseFloat(obj.CPD_MSL_Done)||0,gi:parseFloat(obj.CPD_GI_Done)||0},
+        // Quiz columns — auto-detected if present in CSV
+        quiz:obj.Quiz_Ethics?{ethics:parseFloat(obj.Quiz_Ethics)||0,sales:parseFloat(obj.Quiz_Sales)||0,product_ins:parseFloat(obj.Quiz_Product_Insurance)||0,product_inv:parseFloat(obj.Quiz_Product_Investment)||0,wealth:parseFloat(obj.Quiz_Wealth)||0}:null
+      };
+    }).filter(a=>a.code);
+    advisors=raw.map(a=>processAdvisor(a,parseInt(obj&&obj.Data_Month)||month));
+    renderAll();showTab('overview');
+  };
+  reader.readAsText(file);
+}
+
+document.getElementById('global-month').value=new Date().getMonth()+1;
+</script>
